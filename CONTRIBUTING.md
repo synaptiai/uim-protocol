@@ -1,133 +1,170 @@
+# Contributing to the UIM Protocol
 
-# Contributor Covenant Code of Conduct
+Thank you for your interest in contributing to the Unified Intent Mediator (UIM) Protocol! This document provides guidelines and instructions for contributing to this project.
 
-## Our Pledge
+## Code of Conduct
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, caste, color, religion, or sexual
-identity and orientation.
+By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). Please read it before contributing.
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+## How Can I Contribute?
 
-## Our Standards
+### Reporting Bugs
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+Before creating bug reports, please check the [issue list](https://github.com/synaptiai/uim-protocol/issues) to avoid duplicates. When you create a bug report, include as many details as possible:
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the overall
-  community
+1. Use a clear and descriptive title
+2. Describe the exact steps to reproduce the problem
+3. Describe the behavior you observed and what you expected to see
+4. Include screenshots if possible
+5. Specify your environment (OS, browser, etc.)
 
-Examples of unacceptable behavior include:
+### Suggesting Enhancements
 
-* The use of sexualized language or imagery, and sexual attention or advances of
-  any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email address,
-  without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion:
 
-## Enforcement Responsibilities
+1. Use a clear and descriptive title
+2. Provide a detailed description of the suggested enhancement
+3. Explain why this enhancement would be useful
+4. Specify which area of the protocol it affects (e.g., discovery, execution, policy)
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+### Pull Requests
 
-Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+1. Fork the repository
+2. Create a new branch for your feature or bugfix
+3. Make your changes
+4. Ensure your code follows the project's style guidelines
+5. Write or update tests as needed
+6. Update documentation as needed
+7. Submit a pull request
 
-## Scope
+## Development Process
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official email address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+### Setting Up the Development Environment
 
-## Enforcement
+1. Clone the repository
+   ```bash
+   git clone https://github.com/synaptiai/uim-protocol.git
+   cd uim-protocol
+   ```
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-[INSERT CONTACT METHOD].
-All complaints will be reviewed and investigated promptly and fairly.
+2. Install Poetry (if not already installed)
+   ```bash
+   curl -sSL https://install.python-poetry.org | python3 -
+   ```
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+3. Install dependencies with Poetry
+   ```bash
+   poetry install
+   ```
 
-## Enforcement Guidelines
+4. Activate the virtual environment
+   ```bash
+   poetry shell
+   ```
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+5. Set up pre-commit hooks
+   ```bash
+   poetry run pre-commit install
+   ```
 
-### 1. Correction
+### Working with Poetry
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+This project uses Poetry for dependency management. Here are some common commands:
 
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+- **Add a new dependency**:
+  ```bash
+  poetry add package-name
+  ```
 
-### 2. Warning
+- **Add a development dependency**:
+  ```bash
+  poetry add --group dev package-name
+  ```
 
-**Community Impact**: A violation through a single incident or series of
-actions.
+- **Update dependencies**:
+  ```bash
+  poetry update
+  ```
 
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or permanent
-ban.
+- **Run a command in the virtual environment**:
+  ```bash
+  poetry run command
+  ```
 
-### 3. Temporary Ban
+### Dependency Groups
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
+The project uses Poetry's dependency groups to organize dependencies:
 
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+- **Main**: Core dependencies for the UIM Protocol
+- **Dev**: Development dependencies (testing, linting, etc.)
+- **Docs**: Documentation dependencies (MkDocs, etc.)
+- **NLP**: Natural language processing dependencies (spaCy, etc.)
 
-### 4. Permanent Ban
+To install only specific groups:
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior, harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
+```bash
+# Install only documentation dependencies
+poetry install --only docs
 
-**Consequence**: A permanent ban from any sort of public interaction within the
-community.
+# Install main dependencies and development dependencies
+poetry install --with dev
+```
 
-## Attribution
+### Pre-commit Hooks
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.1, available at
-[https://www.contributor-covenant.org/version/2/1/code_of_conduct.html][v2.1].
+This project uses pre-commit hooks to ensure code quality. The hooks run automatically when you commit changes, but you can also run them manually:
 
-Community Impact Guidelines were inspired by
-[Mozilla's code of conduct enforcement ladder][Mozilla CoC].
+```bash
+poetry run pre-commit run --all-files
+```
 
-For answers to common questions about this code of conduct, see the FAQ at
-[https://www.contributor-covenant.org/faq][FAQ]. Translations are available at
-[https://www.contributor-covenant.org/translations][translations].
+The following hooks are configured:
 
-[homepage]: https://www.contributor-covenant.org
-[v2.1]: https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
-[Mozilla CoC]: https://github.com/mozilla/diversity
-[FAQ]: https://www.contributor-covenant.org/faq
-[translations]: https://www.contributor-covenant.org/translations
+- **Code Formatting**: Black and isort for consistent code style
+- **Linting**: Flake8, Pylint, and MyPy for code quality
+- **File Checks**: Trailing whitespace, end-of-file fixing, YAML/TOML validation
+- **Markdown Linting**: Ensures consistent Markdown formatting
+
+### Coding Standards
+
+- Follow PEP 8 style guide for Python code
+- Use [Black](https://black.readthedocs.io/) for code formatting
+- Use [isort](https://pycqa.github.io/isort/) for import sorting
+- Use meaningful variable and function names
+- Write clear comments and documentation
+- Keep functions small and focused on a single task
+
+### Testing
+
+- Write tests for new features and bug fixes
+- Run tests with Poetry:
+  ```bash
+  poetry run pytest
+  ```
+- Ensure all tests pass before submitting a pull request
+- Aim for high test coverage
+
+### Documentation
+
+- Update documentation for any changes to the protocol
+- Use clear and concise language
+- Include examples where appropriate
+- Build documentation with Poetry:
+  ```bash
+  cd uim-docs
+  poetry run mkdocs build
+  ```
+
+## Contact Information
+
+If you have questions or need help, you can:
+
+- Open an issue on GitHub
+- Join our [Discord server](https://discord.gg/your-discord-invite)
+- Email the maintainers at [uim-protocol@synapti.ai](mailto:uim-protocol@synapti.ai)
+
+## Recognition
+
+Contributors will be acknowledged in the project's documentation and release notes.
+
+Thank you for contributing to the UIM Protocol!

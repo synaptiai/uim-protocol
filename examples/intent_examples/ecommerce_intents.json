@@ -1,0 +1,93 @@
+{
+  "service-info": {
+    "name": "example-ecommerce.com",
+    "description": "Example e-commerce platform providing product search, details, and ordering capabilities.",
+    "service_url": "https://example-ecommerce.com",
+    "service_logo_url": "https://example-ecommerce.com/logo.png",
+    "service_terms_of_service_url": "https://example-ecommerce.com/terms",
+    "service_privacy_policy_url": "https://example-ecommerce.com/privacy"
+  },
+  "intents": [
+    {
+      "intent_uid": "example-ecommerce.com:SearchProducts:v1",
+      "intent_name": "SearchProducts",
+      "description": "Search for products based on various criteria",
+      "input_parameters": [
+        {"name": "query", "type": "string", "required": true, "description": "Search term"},
+        {"name": "category", "type": "string", "required": false, "description": "Product category"},
+        {"name": "price_min", "type": "number", "required": false, "description": "Minimum price"},
+        {"name": "price_max", "type": "number", "required": false, "description": "Maximum price"},
+        {"name": "sort_by", "type": "string", "required": false, "description": "Sorting criteria (price_asc, price_desc, rating, newest)"},
+        {"name": "page", "type": "integer", "required": false, "description": "Page number for pagination"},
+        {"name": "page_size", "type": "integer", "required": false, "description": "Number of results per page"}
+      ],
+      "output_parameters": [
+        {"name": "products", "type": "array", "description": "List of products matching the search criteria"},
+        {"name": "total_results", "type": "integer", "description": "Total number of results"},
+        {"name": "page", "type": "integer", "description": "Current page number"},
+        {"name": "total_pages", "type": "integer", "description": "Total number of pages"}
+      ],
+      "endpoint": "https://api.example-ecommerce.com/products/search",
+      "tags": ["e-commerce", "search", "products"]
+    },
+    {
+      "intent_uid": "example-ecommerce.com:GetProductDetails:v1",
+      "intent_name": "GetProductDetails",
+      "description": "Get detailed information about a specific product",
+      "input_parameters": [
+        {"name": "product_id", "type": "string", "required": true, "description": "Unique identifier for the product"}
+      ],
+      "output_parameters": [
+        {"name": "product", "type": "object", "description": "Detailed product information"},
+        {"name": "related_products", "type": "array", "description": "List of related products"}
+      ],
+      "endpoint": "https://api.example-ecommerce.com/products/details",
+      "tags": ["e-commerce", "product", "details"]
+    },
+    {
+      "intent_uid": "example-ecommerce.com:PlaceOrder:v1",
+      "intent_name": "PlaceOrder",
+      "description": "Place an order for one or more products",
+      "input_parameters": [
+        {"name": "items", "type": "array", "required": true, "description": "List of items to order, each with product_id and quantity"},
+        {"name": "shipping_address", "type": "object", "required": true, "description": "Shipping address information"},
+        {"name": "billing_address", "type": "object", "required": true, "description": "Billing address information"},
+        {"name": "payment_method", "type": "object", "required": true, "description": "Payment method information"}
+      ],
+      "output_parameters": [
+        {"name": "order_id", "type": "string", "description": "Unique identifier for the order"},
+        {"name": "status", "type": "string", "description": "Order status"},
+        {"name": "estimated_delivery", "type": "string", "description": "Estimated delivery date"},
+        {"name": "total_amount", "type": "number", "description": "Total order amount"}
+      ],
+      "endpoint": "https://api.example-ecommerce.com/orders/place",
+      "tags": ["e-commerce", "order", "purchase"]
+    },
+    {
+      "intent_uid": "example-ecommerce.com:GetOrderStatus:v1",
+      "intent_name": "GetOrderStatus",
+      "description": "Get the current status of an order",
+      "input_parameters": [
+        {"name": "order_id", "type": "string", "required": true, "description": "Unique identifier for the order"}
+      ],
+      "output_parameters": [
+        {"name": "order", "type": "object", "description": "Order information including status"},
+        {"name": "tracking_info", "type": "object", "description": "Tracking information if available"}
+      ],
+      "endpoint": "https://api.example-ecommerce.com/orders/status",
+      "tags": ["e-commerce", "order", "status"]
+    }
+  ],
+  "uim-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE...",
+  "uim-policy-file": "https://example-ecommerce.com/uim-policy.json",
+  "uim-api-discovery": "https://example-ecommerce.com/uim/intents/search",
+  "uim-compliance": {
+    "standards": ["ISO27001", "GDPR"],
+    "regional-compliance": {
+      "EU": "GDPR",
+      "US-CA": "CCPA"
+    },
+    "notes": "Data is encrypted in transit and at rest."
+  },
+  "uim-license": "https://uimprotocol.com/licenses/uim-by-nc-v1.0"
+}

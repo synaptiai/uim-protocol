@@ -1,0 +1,155 @@
+site_name: Unified Intent Mediator (UIM) Protocol
+site_description: Documentation for the Unified Intent Mediator (UIM) Protocol
+site_author: UIM Protocol Team
+copyright: UIM-BY-NC-v1.0 - 2025 UIM Protocol Team - synapti.ai
+
+# Repository
+repo_name: uim-protocol
+repo_url: https://github.com/synaptiai/uim-protocol
+edit_uri: edit/main/docs/
+
+# Theme configuration
+theme:
+  name: material
+  logo: assets/images/logo.png
+  favicon: assets/images/favicon.ico
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: danielbentes
+      repo: uim-protocol
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Plugins
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+# Navigation structure
+nav:
+  - Home: index.md
+  - Specification:
+    - specification/index.md
+    - Overview: specification/overview.md
+    - Key Concepts: specification/key-concepts.md
+    - Terminology: specification/terminology.md
+    - Architecture: specification/architecture.md
+    - Core Components: specification/core-components.md
+    - API Guidelines: specification/api-guidelines.md
+    - Security: specification/security.md
+    - Privacy: specification/privacy.md
+    - Appendix: specification/appendix.md
+  - Guides:
+    - guides/index.md
+    - Getting Started: guides/getting-started.md
+    - AI Agent Guide: guides/ai-agent-guide.md
+    - Service Provider Guide: guides/service-provider-guide.md
+    - Integration Examples: guides/integration-examples.md
+    - Testing Guide: guides/testing.md
+    - Visual Differentiation Example: guides/visual-differentiation-example.md
+  - Reference:
+    - reference/index.md
+    - API Reference: reference/api-reference.md
+    - ODRL Vocabulary: reference/odrl-vocabulary.md
+    - Licensing Scheme: reference/licensing-scheme.md
+    - Error Codes: reference/error-codes.md
+    - JSON Schemas: reference/json-schemas.md
+  - Prototypes:
+    - prototypes/index.md
+    - Overview: prototypes/overview.md
+    - Discovery Service: prototypes/discovery-service.md
+    - Mock Agent: prototypes/mock-agent.md
+    - Mock Webservice: prototypes/mock-webservice.md
+  - Community:
+    - community/index.md
+    - Contributing: community/contributing.md
+    - Code of Conduct: community/code-of-conduct.md
+    - Contributors: community/contributors.md
+    - Roadmap: community/roadmap.md
+    - FAQ: community/faq.md
+    - Governance: community/governance.md
+
+# Extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/synaptiai/uim-protocol
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/synaptiai
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/synapti-ai
+  version:
+    provider: mike
+    default: latest
+
+# Extra CSS and JavaScript
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/extra.js

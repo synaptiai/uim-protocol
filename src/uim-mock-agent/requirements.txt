@@ -1,0 +1,5 @@
+cryptography
+pydantic
+pyjwt
+python-dotenv
+requests

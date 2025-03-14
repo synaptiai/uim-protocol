@@ -1,0 +1,78 @@
+[tool.poetry]
+name = "uim-protocol"
+version = "0.2.0"
+description = "Unified Intent Mediator (UIM) Protocol - A standardized framework for AI agents to interact with web services"
+authors = ["UIM Protocol Team <uim-protocol@synapti.ai>"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/synaptiai/uim-protocol"
+documentation = "https://synaptiai.github.io/uim-protocol"
+keywords = ["ai", "protocol", "intent", "mediator", "web-services"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+packages = [
+    { include = "implementations" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.0"
+uvicorn = "^0.30.0"
+pydantic = "^2.7.0"
+python-jose = "^3.3.0"
+python-multipart = "^0.0.9"
+sqlalchemy = "^2.0.30"
+psycopg2-binary = "^2.9.9"
+aiohttp = "^3.9.5"
+cryptography = "^42.0.5"
+pyjwt = "^2.8.0"
+python-dotenv = "^1.0.1"
+dnspython = "^2.6.1"
+alembic = "^1.13.2"
+httpx = "^0.27.0"
+requests = "^2.32.3"
+pydantic-settings = "^2.2.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+pytest-cov = "^4.1.0"
+pytest-asyncio = "^0.23.5"
+flake8 = "^7.0.0"
+black = "^24.2.0"
+isort = "^5.13.2"
+pylint = "^3.3.4"
+pre-commit = "^3.6.2"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.0"
+mkdocs-material = "^9.5.15"
+mkdocs-minify-plugin = "^0.8.0"
+
+[tool.poetry.group.nlp.dependencies]
+spacy = "^3.7.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ["py310", "py311"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+testpaths = ["implementations/centralized-discovery-service/tests"]
+python_files = "test_*.py"
+python_functions = "test_*"

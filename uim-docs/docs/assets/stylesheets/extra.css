@@ -1,0 +1,179 @@
+/* UIM Protocol Documentation Custom Styles */
+
+/* Hero section on homepage */
+.uim-hero {
+  text-align: center;
+  margin: 2rem 0 3rem;
+  padding: 2rem;
+  background-color: rgba(var(--md-primary-fg-color--light-rgb), 0.1);
+  border-radius: 0.5rem;
+}
+
+.uim-logo {
+  max-width: 150px;
+  margin-bottom: 1rem;
+}
+
+.uim-tagline {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+/* Call to action buttons */
+.uim-cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+/* Code blocks */
+.md-typeset pre > code {
+  border-radius: 0.5rem;
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  font-size: 0.9rem;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: rgba(var(--md-primary-fg-color--light-rgb), 0.1);
+  color: var(--md-primary-fg-color);
+}
+
+/* Admonitions */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 0.5rem;
+}
+
+/* Tabs */
+.md-typeset .tabbed-set > label {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Mermaid diagrams */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+/* API endpoints */
+.api-endpoint {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.api-method {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.api-method.get {
+  background-color: #61affe;
+  color: white;
+}
+
+.api-method.post {
+  background-color: #49cc90;
+  color: white;
+}
+
+.api-method.put {
+  background-color: #fca130;
+  color: white;
+}
+
+.api-method.delete {
+  background-color: #f93e3e;
+  color: white;
+}
+
+.api-url {
+  font-family: var(--md-code-font-family);
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+/* Visual Differentiation for Specification vs. Implementation Content */
+
+/* Specification styling */
+.md-typeset .admonition.spec,
+.md-typeset details.spec {
+  border-color: #2196f3;
+}
+.md-typeset .spec > .admonition-title,
+.md-typeset .spec > summary {
+  background-color: rgba(33, 150, 243, 0.1);
+}
+.md-typeset .spec > .admonition-title::before,
+.md-typeset .spec > summary::before {
+  background-color: #2196f3;
+  -webkit-mask-image: var(--md-admonition-icon--note);
+          mask-image: var(--md-admonition-icon--note);
+}
+
+/* Implementation styling */
+.md-typeset .admonition.implementation,
+.md-typeset details.implementation {
+  border-color: #4caf50;
+}
+.md-typeset .implementation > .admonition-title,
+.md-typeset .implementation > summary {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+.md-typeset .implementation > .admonition-title::before,
+.md-typeset .implementation > summary::before {
+  background-color: #4caf50;
+  -webkit-mask-image: var(--md-admonition-icon--tip);
+          mask-image: var(--md-admonition-icon--tip);
+}
+
+/* Specification section headers */
+h2[id^="specification"] {
+  color: #2196f3;
+  border-bottom: 2px solid #2196f3;
+  padding-bottom: 0.3em;
+}
+
+/* Implementation section headers */
+h2[id^="implementation"] {
+  color: #4caf50;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 0.3em;
+}
+
+/* Code block titles */
+.md-typeset pre > code.language-json[title^="Specification"],
+.md-typeset pre > code.language-yaml[title^="Specification"],
+.md-typeset pre > code.language-xml[title^="Specification"] {
+  border-top: 3px solid #2196f3;
+}
+
+.md-typeset pre > code.language-javascript[title^="Implementation"],
+.md-typeset pre > code.language-python[title^="Implementation"],
+.md-typeset pre > code.language-java[title^="Implementation"],
+.md-typeset pre > code.language-csharp[title^="Implementation"] {
+  border-top: 3px solid #4caf50;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 76.1875em) {
+  .uim-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .uim-tagline {
+    font-size: 1.2rem;
+  }
+}

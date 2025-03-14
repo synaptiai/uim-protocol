@@ -1,0 +1,7 @@
+cryptography
+fastapi
+pydantic
+pyjwt
+python-dotenv
+uvicorn
+requests

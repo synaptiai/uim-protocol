@@ -1,0 +1,101 @@
+{
+  "service-info": {
+    "name": "example-realestate.com",
+    "description": "Example real estate platform providing property search, details, and viewing scheduling capabilities.",
+    "service_url": "https://example-realestate.com",
+    "service_logo_url": "https://example-realestate.com/logo.png",
+    "service_terms_of_service_url": "https://example-realestate.com/terms",
+    "service_privacy_policy_url": "https://example-realestate.com/privacy"
+  },
+  "intents": [
+    {
+      "intent_uid": "example-realestate.com:SearchProperties:v1",
+      "intent_name": "SearchProperties",
+      "description": "Search for properties based on various criteria",
+      "input_parameters": [
+        {"name": "location", "type": "string", "required": true, "description": "City, neighborhood, or ZIP code"},
+        {"name": "property_type", "type": "string", "required": false, "description": "Type of property (house, apartment, condo, etc.)"},
+        {"name": "price_min", "type": "number", "required": false, "description": "Minimum price"},
+        {"name": "price_max", "type": "number", "required": false, "description": "Maximum price"},
+        {"name": "bedrooms_min", "type": "integer", "required": false, "description": "Minimum number of bedrooms"},
+        {"name": "bathrooms_min", "type": "number", "required": false, "description": "Minimum number of bathrooms"},
+        {"name": "square_feet_min", "type": "integer", "required": false, "description": "Minimum square footage"},
+        {"name": "sort_by", "type": "string", "required": false, "description": "Sorting criteria (price_asc, price_desc, newest, etc.)"},
+        {"name": "page", "type": "integer", "required": false, "description": "Page number for pagination"},
+        {"name": "page_size", "type": "integer", "required": false, "description": "Number of results per page"}
+      ],
+      "output_parameters": [
+        {"name": "properties", "type": "array", "description": "List of properties matching the search criteria"},
+        {"name": "total_results", "type": "integer", "description": "Total number of results"},
+        {"name": "page", "type": "integer", "description": "Current page number"},
+        {"name": "total_pages", "type": "integer", "description": "Total number of pages"}
+      ],
+      "endpoint": "https://api.example-realestate.com/properties/search",
+      "tags": ["real estate", "search", "properties"]
+    },
+    {
+      "intent_uid": "example-realestate.com:GetPropertyDetails:v1",
+      "intent_name": "GetPropertyDetails",
+      "description": "Get detailed information about a specific property",
+      "input_parameters": [
+        {"name": "property_id", "type": "string", "required": true, "description": "Unique identifier for the property"}
+      ],
+      "output_parameters": [
+        {"name": "property", "type": "object", "description": "Detailed property information"},
+        {"name": "similar_properties", "type": "array", "description": "List of similar properties"},
+        {"name": "agent_info", "type": "object", "description": "Information about the listing agent"}
+      ],
+      "endpoint": "https://api.example-realestate.com/properties/details",
+      "tags": ["real estate", "property", "details"]
+    },
+    {
+      "intent_uid": "example-realestate.com:ScheduleViewing:v1",
+      "intent_name": "ScheduleViewing",
+      "description": "Schedule a viewing for a specific property",
+      "input_parameters": [
+        {"name": "property_id", "type": "string", "required": true, "description": "Unique identifier for the property"},
+        {"name": "date", "type": "string", "required": true, "description": "Preferred date for the viewing (ISO 8601 format)"},
+        {"name": "time", "type": "string", "required": true, "description": "Preferred time for the viewing (HH:MM format)"},
+        {"name": "contact_info", "type": "object", "required": true, "description": "Contact information for the person scheduling the viewing"}
+      ],
+      "output_parameters": [
+        {"name": "viewing_id", "type": "string", "description": "Unique identifier for the scheduled viewing"},
+        {"name": "status", "type": "string", "description": "Status of the viewing request (confirmed, pending, etc.)"},
+        {"name": "confirmation_details", "type": "object", "description": "Details about the confirmed viewing if available"}
+      ],
+      "endpoint": "https://api.example-realestate.com/viewings/schedule",
+      "tags": ["real estate", "viewing", "schedule"]
+    },
+    {
+      "intent_uid": "example-realestate.com:GetMortgageEstimate:v1",
+      "intent_name": "GetMortgageEstimate",
+      "description": "Get an estimate of monthly mortgage payments for a property",
+      "input_parameters": [
+        {"name": "property_id", "type": "string", "required": false, "description": "Unique identifier for the property"},
+        {"name": "property_price", "type": "number", "required": true, "description": "Price of the property"},
+        {"name": "down_payment", "type": "number", "required": true, "description": "Down payment amount"},
+        {"name": "loan_term", "type": "integer", "required": true, "description": "Loan term in years"},
+        {"name": "interest_rate", "type": "number", "required": true, "description": "Annual interest rate"}
+      ],
+      "output_parameters": [
+        {"name": "monthly_payment", "type": "number", "description": "Estimated monthly mortgage payment"},
+        {"name": "total_interest", "type": "number", "description": "Total interest paid over the life of the loan"},
+        {"name": "amortization_schedule", "type": "array", "description": "Detailed amortization schedule"}
+      ],
+      "endpoint": "https://api.example-realestate.com/mortgage/estimate",
+      "tags": ["real estate", "mortgage", "finance"]
+    }
+  ],
+  "uim-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE...",
+  "uim-policy-file": "https://example-realestate.com/uim-policy.json",
+  "uim-api-discovery": "https://example-realestate.com/uim/intents/search",
+  "uim-compliance": {
+    "standards": ["ISO27001", "GDPR"],
+    "regional-compliance": {
+      "EU": "GDPR",
+      "US-CA": "CCPA"
+    },
+    "notes": "Data is encrypted in transit and at rest."
+  },
+  "uim-license": "https://uimprotocol.com/licenses/uim-by-nc-v1.0"
+}
