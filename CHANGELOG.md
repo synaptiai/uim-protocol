@@ -19,7 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation and examples
 
 ### Changed
-- N/A (initial release)
+- Repository structure refactored for better organization
+- Documentation moved to dedicated directories (`docs` and `uim-docs`)
+- Implementation code moved to `/implementations` directory
+- Examples moved to `/examples` directory
 
 ### Deprecated
 - N/A (initial release)

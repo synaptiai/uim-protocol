@@ -61,7 +61,7 @@ The Mock Agent is built with a modular architecture that separates concerns and 
 1. Clone the repository:
    ```bash
    git clone https://github.com/synaptiai/uim-protocol.git
-   cd uim-protocol/src/uim-mock-agent
+   cd uim-protocol/implementations/uim-mock-agent
    ```
 
 2. Install dependencies:

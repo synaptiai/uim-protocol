@@ -62,7 +62,7 @@ Navigate to the uim-mock-agent directory and run the CLI interface:
 
 ```bash
 cd uim-mock-agent
-python src/cli_interface.py
+python implementations/uim-mock-agent/src/cli_interface.py
 ```
 
 #### CLI Menu Options
@@ -118,8 +118,8 @@ uvicorn main:app --host 0.0.0.0 --port 4000
 - Start the Mock Agent CLI:
 
 ```bash
-cd uim-mock-agent
-python src/cli_interface.py
+cd implementations/uim-mock-agent
+python implementations/uim-mock-agent/src/cli_interface.py
 ```
 
 - Set Current Service URL:

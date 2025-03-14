@@ -49,19 +49,19 @@ To get started with the prototype implementations:
 
 2. **Set Up the Discovery Service**:
    ```bash
-   cd uim-protocol/src/centralized-discovery-service
+   cd uim-protocol/implementations/centralized-discovery-service
    # Follow instructions in discovery-service.md
    ```
 
 3. **Set Up the Mock Webservice**:
    ```bash
-   cd uim-protocol/src/uim-mock-webservice
+   cd uim-protocol/implementations/uim-mock-webservice
    # Follow instructions in mock-webservice.md
    ```
 
 4. **Set Up the Mock Agent**:
    ```bash
-   cd uim-protocol/src/uim-mock-agent
+   cd uim-protocol/implementations/uim-mock-agent
    # Follow instructions in mock-agent.md
    ```
 

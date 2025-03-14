@@ -91,7 +91,7 @@ Unit testing focuses on testing individual components of your implementation in 
 
 ```javascript
 const { expect } = require('chai');
-const { signPolicy } = require('../src/policy');
+const { signPolicy } = require('../implementations/policy');
 
 describe('Policy Signing', () => {
   it('should sign a policy correctly', () => {
@@ -118,7 +118,7 @@ Integration testing focuses on testing the interaction between different compone
 
 ```javascript
 const { expect } = require('chai');
-const { UIMAgent } = require('../src/agent');
+const { UIMAgent } = require('../implementations/agent');
 
 describe('Intent Execution Flow', () => {
   it('should execute an intent successfully', async () => {
@@ -158,7 +158,7 @@ End-to-end testing focuses on testing the complete flow from an AI agent to a we
 
 ```javascript
 const { expect } = require('chai');
-const { UIMAgent } = require('../src/agent');
+const { UIMAgent } = require('../implementations/agent');
 const { MockWebservice } = require('uim-mock-webservice');
 
 describe('End-to-End Flow', () => {

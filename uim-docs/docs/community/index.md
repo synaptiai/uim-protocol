@@ -35,7 +35,7 @@ There are many ways to get involved with the UIM Protocol project:
 
 ## Code of Conduct
 
-We are committed to providing a welcoming and inclusive environment for all community members. We expect all community members to adhere to our [Code of Conduct](https://github.com/synaptiai/uim-protocol/blob/main/src/CODE_OF_CONDUCT.md).
+We are committed to providing a welcoming and inclusive environment for all community members. We expect all community members to adhere to our [Code of Conduct](https://github.com/synaptiai/uim-protocol/blob/main/CODE_OF_CONDUCT.md).
 
 ## Community Meetings
 
