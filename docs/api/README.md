@@ -200,7 +200,7 @@ All APIs follow a standard error response format:
 }
 ```
 
-For a complete list of error codes and messages, see the [Error Codes](../specification/uim-specification.md#a-standard-error-codes-and-messages) section in the main specification.
+For a complete list of error codes and messages, see the Error Codes section in the main specification.
 
 ## API Versioning
 
@@ -230,4 +230,4 @@ X-RateLimit-Reset: 1609459200
 
 ## Further Reading
 
-For more detailed information about the UIM Protocol APIs, refer to the [main specification](../specification/uim-specification.md).
+For more detailed information about the UIM Protocol APIs, refer to the [main specification](../specification/uim-specification.txt).

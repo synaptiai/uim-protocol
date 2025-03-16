@@ -5,7 +5,7 @@ This directory contains comprehensive documentation for the Unified Intent Media
 ## Directory Structure
 
 - **specification/**: Contains the core protocol specification documents
-  - `uim-specification.md`: The main protocol specification
+  - `uim-specification.txt`: The main protocol specification
   - `uim-concept.md`: Concepts and motivations behind the UIM protocol
   - `uim-technical-exploration.md`: Technical details and design choices
   - `uim-licensing-scheme.md`: UIM licensing scheme for data usage
@@ -26,7 +26,7 @@ This directory contains comprehensive documentation for the Unified Intent Media
 ## How to Use This Documentation
 
 1. Start with the [concepts and motivations](specification/uim-concept.md) to understand the purpose of the UIM protocol.
-2. Read the [main specification](specification/uim-specification.md) for a comprehensive overview of the protocol.
+2. Read the [main specification](specification/uim-specification.txt) for a comprehensive overview of the protocol.
 3. Explore the [technical exploration](specification/uim-technical-exploration.md) for detailed technical information.
 4. Review the [prototype implementations](../implementations/) to see the protocol in action.
 

@@ -77,7 +77,7 @@ We're inviting developers, AI providers, service operators, and tech/AI enthusia
 
 ### How to Contribute
 
-1. **Review the Draft Proposal**: Check out the [draft specification](docs/specification/uim-specification.md) and explore the protocol's design and implementation.
+1. **Review the Draft Proposal**: Check out the [draft specification](docs/specification/uim-specification.txt) and explore the protocol's design and implementation.
 2. **Join the Discussion**: Start a conversation in the [Discussions](https://github.com/synaptiai/uim-protocol/discussions) tab. We'd love to hear your thoughts on the protocol's design, potential use cases, or any concerns.
 3. **Raise Issues**: Found a bug or have suggestions? Open an [Issue](https://github.com/synaptiai/uim-protocol/issues) to let us know or contribute directly by submitting a Pull Request. See our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 4. **Share the Word**: Help us spread the word about the UIM protocol by sharing this repository with your network. Write a blog post, tweet, or share the project with your colleagues. We appreciate your support!
@@ -122,7 +122,7 @@ uim-protocol/
 
 ## Current Status & Roadmap
 
-The UIM Protocol is currently in the draft proposal phase. See our [milestones](docs/specification/uim-specification.md#milestones-for-the-uim-protocol-development) for the development roadmap.
+The UIM Protocol is currently in the draft proposal phase. See our roadmap for the development roadmap.
 
 ## License
 

@@ -22,7 +22,7 @@ This specification is currently in **Draft Proposal** status. It is being active
 
 For formal reference, the UIM Protocol is also available as an RFC-style specification document. This document is considered the authoritative source for the protocol and follows traditional RFC formatting with numbered sections.
 
-You can view the [formal UIM Protocol specification document](../../../docs/specification/uim-specification.md) for technical implementation details.
+You can view the [formal UIM Protocol specification document](uim-specification.txt) for technical implementation details.
 
 ## Versioning
 

@@ -6,7 +6,7 @@ copyright: UIM-BY-NC-v1.0 - 2025 UIM Protocol Team - synapti.ai
 # Repository
 repo_name: uim-protocol
 repo_url: https://github.com/synaptiai/uim-protocol
-edit_uri: edit/main/docs/
+edit_uri: edit/main/uim-docs/docs/
 
 # Theme configuration
 theme:
@@ -104,6 +104,7 @@ nav:
     - Security: specification/security.md
     - Privacy: specification/privacy.md
     - Appendix: specification/appendix.md
+    - Formal specification: specification/uim-specification.txt
   - Guides:
     - guides/index.md
     - Getting Started: guides/getting-started.md
