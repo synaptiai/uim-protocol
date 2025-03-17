@@ -1,7 +1,9 @@
 # app/dependencies.py
 
-from app.database import SessionLocal
 from contextlib import contextmanager
+
+from app.database import SessionLocal
+
 
 def get_db():
     """Provide a database session."""

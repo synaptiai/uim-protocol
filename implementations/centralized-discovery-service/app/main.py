@@ -1,9 +1,10 @@
 # app/main.py
 
-from fastapi import FastAPI
+from app.database import Base, engine
 from app.routers import discovery, search
-from app.database import engine, Base
 from app.utils.logging import setup_logging
+from fastapi import FastAPI
+
 
 def create_app():
     """Initialize FastAPI app and include routers."""
@@ -20,5 +21,6 @@ def create_app():
     app.include_router(search.router)
 
     return app
+
 
 app = create_app()

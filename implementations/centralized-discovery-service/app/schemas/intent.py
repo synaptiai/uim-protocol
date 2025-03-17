@@ -1,8 +1,11 @@
 # app/schemas/intent.py
 
-from pydantic import BaseModel, ConfigDict, Field
 from typing import List, Optional, Union
+
+from pydantic import BaseModel, ConfigDict
+
 from .tag import Tag, TagCreate
+
 
 class InputParameter(BaseModel):
     name: str
@@ -11,11 +14,13 @@ class InputParameter(BaseModel):
     description: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
+
 class OutputParameter(BaseModel):
     name: str
     type: str
     description: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
+
 
 class IntentBase(BaseModel):
     intent_uid: str
@@ -27,8 +32,10 @@ class IntentBase(BaseModel):
     tags: Optional[List[Union[str, TagCreate]]] = None
     model_config = ConfigDict(from_attributes=True)
 
+
 class IntentCreate(IntentBase):
     model_config = ConfigDict(from_attributes=True)
+
 
 class IntentUpdate(BaseModel):
     description: Optional[str] = None
@@ -37,6 +44,7 @@ class IntentUpdate(BaseModel):
     endpoint: Optional[str] = None
     tags: Optional[List[Tag]] = None
     model_config = ConfigDict(from_attributes=True)
+
 
 class Intent(IntentBase):
     id: int

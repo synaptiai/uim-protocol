@@ -1,14 +1,14 @@
 # tests/test_models.py
 
-import pytest
-from app.models import Service, Intent, Tag
+from app.models import Intent, Service, Tag
+
 
 def test_service_model(db_session):
     """Test creating a Service model instance."""
     service = Service(
         name="testservice.com",
         description="A test service",
-        service_url="https://testservice.com"
+        service_url="https://testservice.com",
     )
     db_session.add(service)
     db_session.commit()
@@ -16,12 +16,13 @@ def test_service_model(db_session):
     assert service.id is not None
     assert service.name == "testservice.com"
 
+
 def test_intent_model(db_session):
     """Test creating an Intent model instance."""
     service = Service(
         name="testservice.com",
         description="A test service",
-        service_url="https://testservice.com"
+        service_url="https://testservice.com",
     )
     db_session.add(service)
     db_session.commit()
@@ -34,13 +35,14 @@ def test_intent_model(db_session):
         description="A test intent",
         input_parameters=[],
         output_parameters=[],
-        endpoint="https://testservice.com/api/execute/TestIntent"
+        endpoint="https://testservice.com/api/execute/TestIntent",
     )
     db_session.add(intent)
     db_session.commit()
     db_session.refresh(intent)
     assert intent.id is not None
     assert intent.intent_name == "TestIntent"
+
 
 def test_tag_model(db_session):
     """Test creating a Tag model instance and associating it with an Intent."""
@@ -54,7 +56,7 @@ def test_tag_model(db_session):
     service = Service(
         name="testservice.com",
         description="A test service",
-        service_url="https://testservice.com"
+        service_url="https://testservice.com",
     )
     db_session.add(service)
     db_session.commit()
@@ -67,7 +69,7 @@ def test_tag_model(db_session):
         description="A test intent",
         input_parameters=[],
         output_parameters=[],
-        endpoint="https://testservice.com/api/execute/TestIntent"
+        endpoint="https://testservice.com/api/execute/TestIntent",
     )
     intent.tags.append(tag)
     db_session.add(intent)

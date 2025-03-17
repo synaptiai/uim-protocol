@@ -2,18 +2,18 @@
 
 from .intent import (
     InputParameter,
-    OutputParameter,
+    Intent,
     IntentBase,
     IntentCreate,
     IntentUpdate,
-    Intent
+    OutputParameter,
 )
 from .service import (
-    ServiceInfo,
+    AgentsJson,
+    Service,
     ServiceBase,
     ServiceCreate,
+    ServiceInfo,
     ServiceUpdate,
-    Service,
-    AgentsJson
 )
 from .tag import Tag

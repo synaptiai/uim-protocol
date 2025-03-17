@@ -1,4 +1,4 @@
 # app/routers/__init__.py
 
-from .discovery import router as discovery_router
-from .search import router as search_router
+# This file is intentionally left empty to mark the directory as a Python package.
+# Import specific routers directly from their modules as needed.

@@ -1,5 +1,4 @@
 # app/services/__init__.py
 
-from .crawler import start_crawler
-from .dns_utils import get_agents_json_url_from_dns
-from .nlp import process_natural_language_query  # If NLP is implemented
+# This file is intentionally left empty to mark the directory as a Python package.
+# Import specific services directly from their modules as needed.

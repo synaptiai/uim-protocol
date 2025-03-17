@@ -1,19 +1,19 @@
 # app/services/crawler.py
 
 import asyncio
-import aiohttp
 import logging
-from typing import List, Dict, Any
-from sqlalchemy.orm import Session
-from app.crud.service import create_service, get_service_by_name
-from app.crud.intent import create_intent
-from app.schemas.service import ServiceCreate
-from app.schemas.intent import IntentCreate
-from app.models import Service, Intent
-from app.config import settings
+from typing import Any, Dict, List
+
+import aiohttp
 import dns.asyncresolver
+from app.crud.intent import create_intent
+from app.crud.service import create_service, get_service_by_name
+from app.schemas.intent import IntentCreate
+from app.schemas.service import ServiceCreate
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
+
 
 class Crawler:
     def __init__(self, domains: List[str], db_session: Session):
@@ -40,7 +40,9 @@ class Crawler:
                     if response.status == 200:
                         return await response.json()
                     else:
-                        logger.error(f"Failed to fetch {url}, status code: {response.status}")
+                        logger.error(
+                            f"Failed to fetch {url}, status code: {response.status}"
+                        )
                         return None
         except Exception as e:
             logger.error(f"Error fetching {url}: {e}")
@@ -49,23 +51,24 @@ class Crawler:
     def process_agents_json(self, agents_json_data: Dict[str, Any]):
         """Process the agents.json data."""
         try:
-            service_info = agents_json_data['service_info']
+            service_info = agents_json_data["service_info"]
             service_data = ServiceCreate(**service_info)
-            service = get_service_by_name(self.db_session, service_info['name'])
+            service = get_service_by_name(self.db_session, service_info["name"])
             if not service:
                 service = create_service(self.db_session, service_data)
-            for intent_data in agents_json_data['intents']:
+            for intent_data in agents_json_data["intents"]:
                 create_intent(self.db_session, IntentCreate(**intent_data), service.id)
             self.db_session.commit()
         except Exception as e:
             logger.error(f"Error saving agents.json data: {e}")
             self.db_session.rollback()
 
+
 async def get_agents_json_url_from_dns(domain: str) -> str:
     """Fetch the agents.json URL from DNS TXT records."""
     try:
         resolver = dns.asyncresolver.Resolver()
-        answers = await resolver.resolve(domain, 'TXT')
+        answers = await resolver.resolve(domain, "TXT")
         for rdata in answers:
             for txt_string in rdata.strings:
                 if txt_string.startswith(b"agents_json_url="):
@@ -74,6 +77,7 @@ async def get_agents_json_url_from_dns(domain: str) -> str:
     except Exception as e:
         logger.error(f"Error fetching DNS TXT records for {domain}: {e}")
         return None
+
 
 async def start_crawler(domains: List[str], db_session: Session):
     """Start the crawler for a list of domains."""

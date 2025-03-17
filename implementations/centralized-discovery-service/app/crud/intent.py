@@ -1,15 +1,20 @@
 # app/crud/intent.py
 
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
-from app import models, schemas
 import logging
+
+from app import models, schemas
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
+
 def get_intent_by_uid(db: Session, intent_uid: str):
     """Retrieve an intent by its unique identifier."""
-    return db.query(models.Intent).filter(models.Intent.intent_uid == intent_uid).first()
+    return (
+        db.query(models.Intent).filter(models.Intent.intent_uid == intent_uid).first()
+    )
+
 
 def get_intents_by_filters(
     db: Session,
@@ -18,7 +23,7 @@ def get_intents_by_filters(
     description: str = None,
     tags: list = None,
     skip: int = 0,
-    limit: int = 10
+    limit: int = 10,
 ):
     """Retrieve intents based on filters."""
     query = db.query(models.Intent)
@@ -32,6 +37,7 @@ def get_intents_by_filters(
         query = query.join(models.Intent.tags).filter(models.Tag.name.in_(tags))
     return query.offset(skip).limit(limit).all()
 
+
 def create_intent(db: Session, intent_data: schemas.IntentCreate, service_id: int):
     """Create a new intent associated with a service."""
     db_intent = models.Intent(
@@ -41,7 +47,7 @@ def create_intent(db: Session, intent_data: schemas.IntentCreate, service_id: in
         description=intent_data.description,
         input_parameters=intent_data.input_parameters,
         output_parameters=intent_data.output_parameters,
-        endpoint=intent_data.endpoint
+        endpoint=intent_data.endpoint,
     )
     # Handle tags
     if intent_data.tags:
@@ -52,7 +58,7 @@ def create_intent(db: Session, intent_data: schemas.IntentCreate, service_id: in
                 tag_name = tag_item
             else:
                 tag_name = tag_item.name
-                
+
             # Check if the tag already exists
             tag = db.query(models.Tag).filter_by(name=tag_name).first()
             if not tag:
@@ -71,6 +77,7 @@ def create_intent(db: Session, intent_data: schemas.IntentCreate, service_id: in
         raise
     return db_intent
 
+
 def update_intent(db: Session, intent: models.Intent, updates: schemas.IntentUpdate):
     """Update an existing intent."""
     for key, value in updates.dict(exclude_unset=True).items():
@@ -83,7 +90,7 @@ def update_intent(db: Session, intent: models.Intent, updates: schemas.IntentUpd
                     tag_name = tag_item
                 else:
                     tag_name = tag_item.name
-                    
+
                 tag = db.query(models.Tag).filter(models.Tag.name == tag_name).first()
                 if not tag:
                     tag = models.Tag(name=tag_name)
@@ -97,6 +104,7 @@ def update_intent(db: Session, intent: models.Intent, updates: schemas.IntentUpd
     db.commit()
     db.refresh(intent)
     return intent
+
 
 def delete_intent(db: Session, intent: models.Intent):
     """Delete an intent."""

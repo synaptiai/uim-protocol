@@ -1,0 +1,36 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .env,
+    env,
+    build,
+    dist,
+    *.egg-info,
+    .pytest_cache,
+    .coverage,
+    htmlcov,
+    .tox,
+    .eggs,
+    .mypy_cache,
+    .vscode,
+    .idea,
+    .github,
+    .venv/lib/python3.10/site-packages/blib2to3/pgen2/tokenize.py,
+    .venv/lib/python3.10/site-packages/dill/_dill.py,
+    .venv/lib/python3.10/site-packages/dill/source.py,
+    .venv/lib/python3.10/site-packages/distlib/compat.py,
+    .venv/lib/python3.10/site-packages/packaging/metadata.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/distlib/compat.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/packaging/metadata.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/pygments/lexer.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/rich/console.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/rich/traceback.py,
+    .venv/lib/python3.10/site-packages/pip/_vendor/urllib3/packages/six.py,
+    .venv/lib/python3.10/site-packages/setuptools/_vendor/packaging/metadata.py,
+    .venv/lib/python3.10/site-packages/virtualenv/activation/python/activate_this.py
+
+max-line-length = 100
+ignore = E203, W503
