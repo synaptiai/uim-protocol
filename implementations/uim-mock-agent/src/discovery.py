@@ -4,8 +4,10 @@ from typing import Dict, List
 from error_handling import handle_error, NetworkError, APIError
 from key_management import get_key_pair
 
+
 SERVICE_URL = "http://localhost:4000"  # Adjust this URL if needed
 AGENTS_ENDPOINT = f"{SERVICE_URL}/agents.json"
+
 
 def fetch_agents_json() -> Dict:
     try:
@@ -17,6 +19,7 @@ def fetch_agents_json() -> Dict:
     except json.JSONDecodeError as e:
         raise APIError(f"Error parsing agents.json: {str(e)}")
 
+
 def extract_intent_metadata(agents_data: Dict) -> Dict:
     print(f"Debug: agents_data structure: {json.dumps(agents_data, indent=2)}")
     intents = []
@@ -27,20 +30,23 @@ def extract_intent_metadata(agents_data: Dict) -> Dict:
 
     for intent in agents_data.get("intents", []):
         print(f"Debug: Processing intent: {json.dumps(intent, indent=2)}")
-        intents.append({
-            "name": intent.get("intent_name"),
-            "description": intent.get("description"),
-            "agent": agents_data.get("service-info", {}).get("name"),
-            "intent_uid": intent.get("intent_uid"),
-            "service_url": service_url
-        })
+        intents.append(
+            {
+                "name": intent.get("intent_name"),
+                "description": intent.get("description"),
+                "agent": agents_data.get("service-info", {}).get("name"),
+                "intent_uid": intent.get("intent_uid"),
+                "service_url": service_url,
+            }
+        )
 
     print(f"Debug: Extracted intents: {json.dumps(intents, indent=2)}")
     return {
         "intents": intents,
         "execute_endpoint": execute_endpoint,
-        "service_url": service_url
+        "service_url": service_url,
     }
+
 
 def main():
     try:
@@ -72,6 +78,7 @@ def main():
         print(f"Debug: Exception occurred: {str(e)}")
         print(f"Debug: Exception type: {type(e)}")
         print(handle_error(e))
+
 
 if __name__ == "__main__":
     main()

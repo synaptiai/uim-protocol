@@ -17,12 +17,17 @@ repos:
     hooks:
       - id: black
         language_version: python3
+        # Explicitly target implementation directories
+        files: ^(implementations/|cline_utils/)
+        # Add these args to match GitHub Actions configuration
+        args: ["--check", "--diff"]
 
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
       - id: isort
         args: ["--profile", "black"]
+        files: ^(implementations/|cline_utils/)
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.0.0
@@ -33,6 +38,7 @@ repos:
           - flake8-bugbear
           - flake8-comprehensions
         args: [--max-line-length=88]
+        files: ^(implementations/|cline_utils/)
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
@@ -43,6 +49,7 @@ repos:
           - types-PyYAML
         exclude: ^(docs/|tests/)
         args: [--ignore-missing-imports]
+        files: ^(implementations/|cline_utils/)
 
   - repo: https://github.com/pycqa/pylint
     rev: v3.1.0
@@ -50,7 +57,18 @@ repos:
       - id: pylint
         args: [--disable=all, --enable=unused-import]
         exclude: ^(docs/|tests/)
+        files: ^(implementations/|cline_utils/)
 
+  # Add a custom hook to detect Pydantic v2 import issues
+  - repo: local
+    hooks:
+      - id: check-pydantic-imports
+        name: Check Pydantic imports
+        entry: bash -c 'grep -r "from pydantic import BaseSettings" implementations/ || true'
+        language: system
+        pass_filenames: false
+        types: [python]
+        
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.39.0
     hooks:

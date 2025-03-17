@@ -1,20 +1,29 @@
 import requests
 
+
 class UIMMockAgentError(Exception):
     """Base exception class for UIM Mock Agent"""
+
     pass
+
 
 class NetworkError(UIMMockAgentError):
     """Exception raised for network-related errors"""
+
     pass
+
 
 class APIError(UIMMockAgentError):
     """Exception raised for API-related errors"""
+
     pass
+
 
 class InputError(UIMMockAgentError):
     """Exception raised for invalid input errors"""
+
     pass
+
 
 def handle_http_error(e: requests.RequestException) -> str:
     """Handle HTTP errors and return user-friendly error messages"""
@@ -35,6 +44,7 @@ def handle_http_error(e: requests.RequestException) -> str:
         return "Service unavailable. Please try again later."
     else:
         return f"An error occurred: {str(e)}"
+
 
 def handle_error(e: Exception) -> str:
     """Handle various types of errors and return user-friendly error messages"""

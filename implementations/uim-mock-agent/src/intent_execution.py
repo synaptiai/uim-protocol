@@ -4,7 +4,10 @@ from error_handling import NetworkError, APIError
 
 MOCK_SERVICE_URL = "http://localhost:4000"
 
-def execute_intent(intent_uid: str, params: Dict[str, Any], execute_endpoint: str, pat: str) -> Dict[str, Any]:
+
+def execute_intent(
+    intent_uid: str, params: Dict[str, Any], execute_endpoint: str, pat: str
+) -> Dict[str, Any]:
     """
     Execute an intent with the given parameters and PAT.
 
@@ -24,16 +27,10 @@ def execute_intent(intent_uid: str, params: Dict[str, Any], execute_endpoint: st
     url = execute_endpoint
     print(f"Debug: Constructed URL: {url}")
 
-    payload = {
-        "intent_uid": intent_uid,
-        "parameters": params
-    }
+    payload = {"intent_uid": intent_uid, "parameters": params}
     print(f"Debug: Payload: {payload}")
 
-    headers = {
-        "Authorization": f"Bearer {pat}",
-        "Content-Type": "application/json"
-    }
+    headers = {"Authorization": f"Bearer {pat}", "Content-Type": "application/json"}
     print(f"Debug: Headers: {headers}")
 
     try:
@@ -42,6 +39,7 @@ def execute_intent(intent_uid: str, params: Dict[str, Any], execute_endpoint: st
         return response.json()
     except requests.RequestException as e:
         raise NetworkError(f"Error executing intent: {str(e)}")
+
 
 def get_intent_params(intent_uid: str) -> Dict[str, Any]:
     """
