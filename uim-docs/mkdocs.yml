@@ -105,6 +105,14 @@ nav:
     - Privacy: specification/privacy.md
     - Appendix: specification/appendix.md
     - Formal specification: specification/uim-specification.txt
+    - Additional Documents:
+      - specification/additional/index.md
+      - EU TDM Compliance: specification/additional/uim-compliance-with-eu-tdm-regulation.md
+      - TDMRep Relation: specification/additional/uim-tdmrep-relation.md
+      - RFC Compliance Analysis: specification/additional/rfc-compliance-analysis.md
+      - RFC Compliance Summary: specification/additional/rfc-compliance-summary.md
+      - Intent Examples: specification/additional/intent_examples.md
+      - Presentation: specification/additional/presentation.md
   - Guides:
     - guides/index.md
     - Getting Started: guides/getting-started.md
@@ -134,6 +142,9 @@ nav:
     - Roadmap: community/roadmap.md
     - FAQ: community/faq.md
     - Governance: community/governance.md
+  - Resources:
+    - resources/index.md
+    - Podcast: resources/podcast.md
 
 # Extra configuration
 extra:
