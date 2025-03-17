@@ -49,7 +49,9 @@ def get_key_pair(service_url):
         public_key_path = os.path.join(key_dir, "public_key.pem")
 
         if not os.path.exists(private_key_path) or not os.path.exists(public_key_path):
-            print(f"Key pair not found for service URL {service_url}, generating new key pair.")
+            print(
+                f"Key pair not found for service URL {service_url}, generating new key pair."
+            )
             generate_key_pair(service_url)
 
         with open(private_key_path, "rb") as f:

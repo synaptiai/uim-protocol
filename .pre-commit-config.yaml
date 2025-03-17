@@ -68,7 +68,7 @@ repos:
         language: system
         pass_filenames: false
         types: [python]
-        
+
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.39.0
     hooks:

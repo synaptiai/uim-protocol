@@ -1,5 +1,9 @@
 name: Build and Deploy Documentation
 
+# Add permissions to allow GitHub Actions to push to gh-pages
+permissions:
+  contents: write
+
 on:
   push:
     branches:
