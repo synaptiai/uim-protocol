@@ -1,8 +1,8 @@
 # app/schemas/intent.py
 
-from pydantic import BaseModel, ConfigDict
-from typing import List, Optional
-from .tag import Tag
+from pydantic import BaseModel, ConfigDict, Field
+from typing import List, Optional, Union
+from .tag import Tag, TagCreate
 
 class InputParameter(BaseModel):
     name: str
@@ -24,11 +24,10 @@ class IntentBase(BaseModel):
     input_parameters: List[InputParameter]
     output_parameters: List[OutputParameter]
     endpoint: str
-    tags: Optional[List[Tag]] = None
+    tags: Optional[List[Union[str, TagCreate]]] = None
     model_config = ConfigDict(from_attributes=True)
 
 class IntentCreate(IntentBase):
-    pass
     model_config = ConfigDict(from_attributes=True)
 
 class IntentUpdate(BaseModel):

@@ -46,7 +46,13 @@ def create_intent(db: Session, intent_data: schemas.IntentCreate, service_id: in
     # Handle tags
     if intent_data.tags:
         tags = []
-        for tag_name in intent_data.tags:
+        for tag_item in intent_data.tags:
+            # Handle both string tags and TagCreate objects
+            if isinstance(tag_item, str):
+                tag_name = tag_item
+            else:
+                tag_name = tag_item.name
+                
             # Check if the tag already exists
             tag = db.query(models.Tag).filter_by(name=tag_name).first()
             if not tag:
@@ -71,7 +77,13 @@ def update_intent(db: Session, intent: models.Intent, updates: schemas.IntentUpd
         if key == "tags" and value is not None:
             # Update tags
             tags = []
-            for tag_name in value:
+            for tag_item in value:
+                # Handle both string tags and Tag objects
+                if isinstance(tag_item, str):
+                    tag_name = tag_item
+                else:
+                    tag_name = tag_item.name
+                    
                 tag = db.query(models.Tag).filter(models.Tag.name == tag_name).first()
                 if not tag:
                     tag = models.Tag(name=tag_name)
