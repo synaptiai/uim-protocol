@@ -97,9 +97,9 @@ describe('Policy Signing', () => {
   it('should sign a policy correctly', () => {
     const policy = { /* policy object */ };
     const privateKey = '...';
-    
+
     const signature = signPolicy(policy, privateKey);
-    
+
     expect(signature).to.be.a('string');
     expect(signature.length).to.be.greaterThan(0);
   });
@@ -123,15 +123,15 @@ const { UIMAgent } = require('../implementations/agent');
 describe('Intent Execution Flow', () => {
   it('should execute an intent successfully', async () => {
     const agent = new UIMAgent('test-agent');
-    
+
     // Discover service
     const service = await agent.discoverService('example.com');
     expect(service).to.not.be.null;
-    
+
     // Get policy and PAT
     const pat = await agent.getPAT(service.policyUrl);
     expect(pat).to.not.be.null;
-    
+
     // Execute intent
     const result = await agent.executeIntent(
       service.url,
@@ -139,7 +139,7 @@ describe('Intent Execution Flow', () => {
       { query: 'laptop' },
       pat
     );
-    
+
     expect(result).to.not.be.null;
     expect(result.products).to.be.an('array');
   });
@@ -163,34 +163,34 @@ const { MockWebservice } = require('uim-mock-webservice');
 
 describe('End-to-End Flow', () => {
   let webservice;
-  
+
   before(async () => {
     // Start mock webservice
     webservice = new MockWebservice();
     await webservice.start();
   });
-  
+
   after(async () => {
     // Stop mock webservice
     await webservice.stop();
   });
-  
+
   it('should complete the full flow successfully', async () => {
     const agent = new UIMAgent('test-agent');
-    
+
     // Discover service
     const service = await agent.discoverService('localhost');
     expect(service).to.not.be.null;
-    
+
     // Get policy and PAT
     const pat = await agent.getPAT(service.policyUrl);
     expect(pat).to.not.be.null;
-    
+
     // Search for intents
     const intents = await agent.searchIntents(service.url, { tags: ['e-commerce'] });
     expect(intents).to.be.an('array');
     expect(intents.length).to.be.greaterThan(0);
-    
+
     // Execute intent
     const intent = intents[0];
     const result = await agent.executeIntent(
@@ -199,7 +199,7 @@ describe('End-to-End Flow', () => {
       { query: 'laptop' },
       pat
     );
-    
+
     expect(result).to.not.be.null;
     expect(result.products).to.be.an('array');
   });

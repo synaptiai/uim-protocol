@@ -10,7 +10,7 @@ You can use the `spec` admonition to highlight specification content:
 
 !!! spec "Specification: Intent Format"
     An intent must follow this format:
-    
+
     ```json
     {
       "intent_uid": "namespace:intent_name:version",
@@ -20,7 +20,7 @@ You can use the `spec` admonition to highlight specification content:
       }
     }
     ```
-    
+
     The `intent_uid` is a required field and must follow the format `namespace:intent_name:version`.
 
 ### Implementation Content
@@ -29,7 +29,7 @@ You can use the `implementation` admonition to highlight implementation content:
 
 !!! implementation "Implementation: JavaScript Example"
     Here's how you might implement an intent in JavaScript:
-    
+
     ```javascript title="Implementation: Creating an Intent"
     function createIntent(namespace, intentName, version, parameters) {
       return {
@@ -37,7 +37,7 @@ You can use the `implementation` admonition to highlight implementation content:
         parameters: parameters || {}
       };
     }
-    
+
     // Example usage
     const searchIntent = createIntent(
       'ecommerce.com',
@@ -70,22 +70,22 @@ async function discoverIntents(domain) {
   try {
     // Look up DNS TXT records
     const txtRecords = await dns.promises.resolveTxt(domain);
-    
+
     // Find the record with the agents.json URL
-    const agentsRecord = txtRecords.find(record => 
+    const agentsRecord = txtRecords.find(record =>
       record[0].startsWith('uim-agents-file=')
     );
-    
+
     if (!agentsRecord) {
       throw new Error('No agents.json URL found in DNS TXT records');
     }
-    
+
     // Extract the URL
     const agentsUrl = agentsRecord[0].split('=')[1];
-    
+
     // Fetch the agents.json file
     const response = await axios.get(agentsUrl);
-    
+
     return response.data;
   } catch (error) {
     console.error('Error discovering intents:', error);
@@ -140,7 +140,7 @@ def discover_intents(domain):
     try:
         # Look up DNS TXT records
         txt_records = dns.resolver.resolve(domain, 'TXT')
-        
+
         # Find the record with the agents.json URL
         agents_url = None
         for record in txt_records:
@@ -151,14 +151,14 @@ def discover_intents(domain):
                     break
             if agents_url:
                 break
-        
+
         if not agents_url:
             raise Exception('No agents.json URL found in DNS TXT records')
-        
+
         # Fetch the agents.json file
         response = requests.get(agents_url)
         response.raise_for_status()
-        
+
         return response.json()
     except Exception as e:
         print(f'Error discovering intents: {e}')

@@ -1,14 +1,13 @@
 <div align="center">
-  <img src="docs/images/abstract.png" alt="UIM Protocol Logo">
+  <img src="https://synaptiai.github.io/uim-protocol/assets/images/abstract.png" alt="UIM Protocol Logo">
   <h1>The Unified Intent Mediator Protocol</h1>
   <p>A standardized framework for AI agents to interact with web services through well-defined intents</p>
 </div>
 
 ## Getting Started
 
-1. Get familiar with the [concepts and motivations](docs/specification/uim-concept.md) behind the UIM protocol
-2. Dive into the [technical exploration](docs/specification/uim-technical-exploration.md) to understand the details and technical choices
-3. Explore the [prototype implementations](implementations/README.md) to see the UIM protocol in action
+1. Get familiar with the [concepts and motivations](https://synaptiai.github.io/uim-protocol/specification/) behind the UIM protocol
+2. Explore the [prototype implementations](https://synaptiai.github.io/uim-protocol/prototypes/) to see the UIM protocol in action
 
 ## Development Setup
 
@@ -31,7 +30,7 @@ This project uses [Poetry](https://python-poetry.org/) for dependency management
    ```bash
    poetry install
    ```
-   
+
    This will create a virtual environment and install all dependencies.
 
 3. Activate the virtual environment:
@@ -77,7 +76,7 @@ We're inviting developers, AI providers, service operators, and tech/AI enthusia
 
 ### How to Contribute
 
-1. **Review the Draft Proposal**: Check out the [draft specification](docs/specification/uim-specification.txt) and explore the protocol's design and implementation.
+1. **Review the Draft Proposal**: Check out the [draft specification](https://synaptiai.github.io/uim-protocol/specification/uim-specification.txt) and explore the protocol's design and implementation.
 2. **Join the Discussion**: Start a conversation in the [Discussions](https://github.com/synaptiai/uim-protocol/discussions) tab. We'd love to hear your thoughts on the protocol's design, potential use cases, or any concerns.
 3. **Raise Issues**: Found a bug or have suggestions? Open an [Issue](https://github.com/synaptiai/uim-protocol/issues) to let us know or contribute directly by submitting a Pull Request. See our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 4. **Share the Word**: Help us spread the word about the UIM protocol by sharing this repository with your network. Write a blog post, tweet, or share the project with your colleagues. We appreciate your support!
@@ -106,16 +105,17 @@ The UIM Protocol supports multiple architectural approaches:
 
 ```
 uim-protocol/
-├── docs/                  # Documentation
-│   ├── specification/     # Protocol specifications
-│   ├── images/            # Documentation images
-│   └── api/               # API documentation
 ├── implementations/       # Reference implementations
 │   ├── centralized-discovery-service/
 │   ├── uim-mock-agent/
 │   └── uim-mock-webservice/
 ├── examples/              # Usage examples and demos
-├── uim-docs/              # MkDocs documentation source
+├── uim-docs/              # Documentation
+│   ├── docs/              # Documentation source files
+│   │   ├── specification/ # Protocol specifications
+│   │   ├── assets/        # Documentation assets (images, etc.)
+│   │   └── reference/     # API reference documentation
+│   └── site/              # Generated documentation site
 ├── pyproject.toml         # Poetry configuration
 └── poetry.lock            # Poetry lock file
 ```

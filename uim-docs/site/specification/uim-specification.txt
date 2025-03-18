@@ -184,7 +184,7 @@ Table of Contents
 
    2. Intent Discovery
       AI agents discover available services and intents through:
-      
+
       o  DNS-based discovery (Section 4.1)
       o  Service description retrieval (Section 4.2)
       o  Direct endpoint queries
@@ -1298,7 +1298,7 @@ C.2. Error Handling
       ```
 
       When an AI agent submits an intent with invalid parameters:
-      
+
       a. The service validates the parameters and detects the issue.
       b. The service returns an error response with details about the invalid parameter.
       c. The AI agent corrects the parameter and resubmits the request.
@@ -1321,7 +1321,7 @@ C.2. Error Handling
       ```
 
       When a PAT expires:
-      
+
       a. The AI agent attempts to execute an intent with an expired PAT.
       b. The service validates the PAT and detects that it has expired.
       c. The service returns a 401 Unauthorized response.
@@ -1351,7 +1351,7 @@ C.2. Error Handling
       ```
 
       When a service becomes unavailable:
-      
+
       a. The AI agent attempts to execute an intent.
       b. The service is unavailable and returns a 503 Service Unavailable response.
       c. The AI agent performs discovery to locate an alternative service.

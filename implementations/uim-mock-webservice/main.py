@@ -1,22 +1,33 @@
-import os
-from pydantic import BaseModel, Field
-from typing import Dict, Any
-from dotenv import load_dotenv
-from fastapi import FastAPI, Request, HTTPException, Depends
-from fastapi.responses import JSONResponse
-import jwt
-from datetime import datetime, timedelta, timezone
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
-from fastapi.security import HTTPBearer
+"""
+UIM Mock Webservice.
+
+This module implements a mock webservice for the UIM protocol, providing endpoints
+for policy retrieval, PAT issuance, and intent execution. It simulates a real estate
+service with search and property details intents.
+"""
+
 import base64
+import os
 import uuid
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict
+
+import jwt
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+from fastapi.security import HTTPBearer
+from pydantic import BaseModel, Field
 
 # Load environment variables
 load_dotenv()
 
 
 class SearchRequest(BaseModel):
+    """Request model for property search intent."""
+
     location: str
     min_price: int = None
     max_price: int = None
@@ -24,19 +35,27 @@ class SearchRequest(BaseModel):
 
 
 class SearchResponse(BaseModel):
+    """Response model for property search intent."""
+
     properties: list
     total_results: int
 
 
 class DetailsRequest(BaseModel):
+    """Request model for property details intent."""
+
     property_id: str
 
 
 class DetailsResponse(BaseModel):
+    """Response model for property details intent."""
+
     property_details: dict
 
 
 class PolicyAgreementRequest(BaseModel):
+    """Request model for policy agreement and PAT issuance."""
+
     agent_id: str = Field(..., description="The unique identifier of the agent")
     signed_policy: str = Field(
         ..., min_length=1, description="The signed policy document"
@@ -47,6 +66,8 @@ class PolicyAgreementRequest(BaseModel):
 
 
 class ExecuteRequest(BaseModel):
+    """Request model for intent execution."""
+
     intent_uid: str = Field(..., description="The unique identifier of the intent")
     parameters: Dict[str, Any] = Field(..., description="The parameters for the intent")
 
@@ -64,8 +85,8 @@ def get_key_pair(as_string: bool = False):
         public_key_path = os.path.join("keys", "public_key.pem")
 
         if not os.path.exists(private_key_path) or not os.path.exists(public_key_path):
-            print(f"Key pair not found for service under /keys.")
-            raise Exception("Key pair not found.")
+            print("Key pair not found for service under /keys.")
+            raise FileNotFoundError("Key pair not found.")
 
         with open(private_key_path, "rb") as f:
             if as_string:
@@ -83,7 +104,7 @@ def get_key_pair(as_string: bool = False):
                     f.read(), backend=default_backend()
                 )
 
-        print(f"Key pair loaded for service under /keys.")
+        print("Key pair loaded for service under /keys.")
         return private_key, public_key
     except Exception as e:
         print(f"Error loading key pair for service: {e}")
@@ -96,11 +117,32 @@ UIM_SERVICE_LICENSE = os.getenv("UIM_SERVICE_LICENSE")
 
 @app.get("/agents.json")
 async def get_agents_json(request: Request):
+    """
+    Endpoint to retrieve the agents.json file.
+
+    This endpoint provides information about the service, available intents,
+    and UIM-specific configuration.
+
+    Args:
+        request: The FastAPI request object
+
+    Returns:
+        JSONResponse: The agents.json content
+    """
     agents_json = create_agents_json(request)
     return JSONResponse(content=agents_json)
 
 
 def create_agents_json(request: Request):
+    """
+    Create the agents.json content.
+
+    Args:
+        request: The FastAPI request object
+
+    Returns:
+        dict: The agents.json content
+    """
     base_url = f"{request.url.scheme}://{request.client.host}:{request.url.port}"
     public_key_pem = UIM_SERVICE_PUBLIC_KEY.public_bytes(
         encoding=serialization.Encoding.PEM,
@@ -111,7 +153,8 @@ def create_agents_json(request: Request):
     return {
         "service-info": {
             "name": "fakerealestate.com",
-            "description": "A fictional service providing property listings and real estate data.",
+            "description": "A fictional service providing property listings "
+            "and real estate data.",
             "service_url": f"{base_url}",
             "service_logo_url": f"{base_url}/logo.png",
             "service_terms_of_service_url": f"{base_url}/terms",
@@ -121,7 +164,10 @@ def create_agents_json(request: Request):
             {
                 "intent_uid": "fakerealestate.com:searchProperty:v1",
                 "intent_name": "SearchProperty",
-                "description": "Searches properties based on location, price range, and property type.",
+                "description": (
+                    "Searches properties based on location, price range, "
+                    "and property type."
+                ),
                 "input_parameters": SearchRequest.model_json_schema()["properties"],
                 "output_parameters": SearchResponse.model_json_schema()["properties"],
                 "tags": ["real estate", "search", "property"],
@@ -131,7 +177,10 @@ def create_agents_json(request: Request):
             {
                 "intent_uid": "fakerealestate.com:getPropertyDetails:v1",
                 "intent_name": "GetPropertyDetails",
-                "description": "Fetches detailed information for a specific property based on property ID.",
+                "description": (
+                    "Fetches detailed information for a specific property "
+                    "based on property ID."
+                ),
                 "input_parameters": DetailsRequest.model_json_schema()["properties"],
                 "output_parameters": DetailsResponse.model_json_schema()["properties"],
                 "tags": ["real estate", "details", "property"],
@@ -154,11 +203,29 @@ def create_agents_json(request: Request):
 
 @app.get("/uim-policy.json")
 async def get_policy_json(request: Request):
+    """
+    Endpoint to retrieve the UIM policy in ODRL format.
+
+    Args:
+        request: The FastAPI request object
+
+    Returns:
+        JSONResponse: The policy JSON content
+    """
     policy_json = create_policy_json(request)
     return JSONResponse(content=policy_json)
 
 
 def create_policy_json(request: Request):
+    """
+    Create the ODRL policy JSON content.
+
+    Args:
+        request: The FastAPI request object
+
+    Returns:
+        dict: The policy JSON content
+    """
     base_url = f"{request.url.scheme}://{request.client.host}:{request.url.port}"
 
     return {
@@ -247,6 +314,16 @@ def create_policy_json(request: Request):
 
 
 def verify_signed_policy(signed_policy: str, agent_public_key: str) -> Dict:
+    """
+    Verify a signed policy using the agent's public key.
+
+    Args:
+        signed_policy: The JWT-encoded signed policy
+        agent_public_key: The agent's public key in Base64URL format
+
+    Returns:
+        bool: True if verification succeeds, False otherwise
+    """
     try:
         # Decode the Base64URL-encoded public key string back to bytes
         decoded_public_key = base64.urlsafe_b64decode(agent_public_key)
@@ -260,32 +337,48 @@ def verify_signed_policy(signed_policy: str, agent_public_key: str) -> Dict:
         print(f"Verification successful for policy: {decoded_policy}")
         return True
     except jwt.ExpiredSignatureError as e:
-        print(
-            f"Error during policy verification: Signature has expired. Full error: {e}"
-        )
+        print("Error during policy verification: " f"Signature has expired. Error: {e}")
         return False
     except jwt.InvalidTokenError as e:
-        print(f"Error during policy verification: Invalid token. Full error: {e}")
+        print(f"Error during policy verification: Invalid token. Error: {e}")
         return False
 
 
 def verify_pat(request: Request):
+    """
+    Verify a Policy Adherence Token (PAT) from the request's Authorization header.
+
+    Args:
+        request: The FastAPI request object
+
+    Returns:
+        dict: The decoded PAT payload
+
+    Raises:
+        HTTPException: If the PAT is invalid, expired, or missing
+    """
     authorization_header = request.headers.get("Authorization")
     if not authorization_header:
         raise HTTPException(status_code=401, detail="Unauthorized")
-    if authorization_header:
-        token_type, token = authorization_header.split(" ")
-    if not token:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    # Split the Authorization header into token type and token
+    parts = authorization_header.split(" ")
+    if len(parts) != 2:
+        raise HTTPException(
+            status_code=401, detail="Invalid Authorization header format"
+        )
+
+    token = parts[1]
+
     try:
         # Decode the token without verification to extract the payload
         decoded_pat = jwt.decode(token, options={"verify_signature": False})
-        UIM_SERVICE_PRIVATE_KEY, UIM_SERVICE_PUBLIC_KEY = get_key_pair(True)
+        private_key, _ = get_key_pair(True)
 
         # Verify the token's signature
         jwt.decode(
             token,
-            UIM_SERVICE_PRIVATE_KEY,
+            private_key,
             algorithms=["HS256"],
             options={"verify_aud": False},
         )
@@ -298,13 +391,28 @@ def verify_pat(request: Request):
         print(f"Verification successful for PAT: {decoded_pat}")
 
     except jwt.InvalidTokenError as e:  # Invalid token
-        raise HTTPException(status_code=403, detail=f"Invalid PAT: {e}")
+        raise HTTPException(status_code=403, detail=f"Invalid PAT: {e}") from e
 
     return decoded_pat
 
 
 @app.post("/pat/issue")
 async def issue_pat(request: PolicyAgreementRequest):
+    """
+    Endpoint to issue a Policy Adherence Token (PAT).
+
+    This endpoint verifies the signed policy and issues a PAT if valid.
+
+    Args:
+        request: The PolicyAgreementRequest containing the agent ID, signed policy,
+                and agent public key
+
+    Returns:
+        dict: A dictionary containing the issued PAT
+
+    Raises:
+        HTTPException: If the policy verification fails or required fields are missing
+    """
     print(f"Received policy agreement request: {request}")
 
     if not request.signed_policy:
@@ -326,8 +434,8 @@ async def issue_pat(request: PolicyAgreementRequest):
         "valid_from": datetime.now(timezone.utc).isoformat(),
         "valid_to": (datetime.now(timezone.utc) + timedelta(days=365)).isoformat(),
     }
-    UIM_SERVICE_PRIVATE_KEY, UIM_SERVICE_PUBLIC_KEY = get_key_pair(True)
-    token = jwt.encode(pat, UIM_SERVICE_PRIVATE_KEY, algorithm="HS256")
+    private_key, _ = get_key_pair(True)
+    token = jwt.encode(pat, private_key, algorithm="HS256")
     return {"uim-pat": token}
 
 
@@ -336,15 +444,34 @@ security_scheme = HTTPBearer()
 
 
 @app.post("/uim/execute", dependencies=[Depends(security_scheme)])
-async def execute_intent(request: ExecuteRequest, pat: dict = Depends(verify_pat)):
+async def execute_intent(request: ExecuteRequest, _: dict = Depends(verify_pat)):
+    """
+    Endpoint to execute an intent.
+
+    This endpoint executes the specified intent with the provided parameters.
+    It requires a valid PAT in the Authorization header.
+
+    Args:
+        request: The ExecuteRequest containing the intent UID and parameters
+        _: The decoded PAT payload (injected by the verify_pat dependency but not used)
+
+    Returns:
+        JSONResponse: The intent execution result
+
+    Raises:
+        HTTPException: If the intent UID is unknown
+    """
+    # The PAT is verified by the dependency but not used in this function
     intent_uid = request.intent_uid
     parameters = request.parameters
 
     if intent_uid == "fakerealestate.com:searchProperty:v1":
         location = parameters.get("location")
-        min_price = parameters.get("min_price")
-        max_price = parameters.get("max_price")
         property_type = parameters.get("property_type")
+        # These parameters are not used in this simple implementation
+        # but would be in a real one
+        # min_price = parameters.get("min_price")
+        # max_price = parameters.get("max_price")
 
         # Simulate a search operation
         if location == "New York" and property_type == "apartment":

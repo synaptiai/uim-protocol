@@ -214,7 +214,7 @@ function executeIntent(req, res) {
         }
       });
     }
-    
+
     // Check authentication
     if (!req.headers.authorization) {
       return res.status(401).json({
@@ -225,10 +225,10 @@ function executeIntent(req, res) {
         }
       });
     }
-    
+
     // Execute intent
     const result = executeIntentLogic(req.body.intent_uid, req.body.parameters);
-    
+
     // Return result
     return res.status(200).json(result);
   } catch (error) {
@@ -264,9 +264,9 @@ async function executeIntent(intentUid, parameters) {
         parameters: parameters
       })
     });
-    
+
     const data = await response.json();
-    
+
     if (!response.ok) {
       // Handle error
       if (data.error) {
@@ -291,7 +291,7 @@ async function executeIntent(intentUid, parameters) {
         throw new Error(`HTTP error: ${response.status}`);
       }
     }
-    
+
     return data;
   } catch (error) {
     console.error("Error executing intent:", error);

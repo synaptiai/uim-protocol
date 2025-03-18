@@ -53,7 +53,7 @@ def discover_service(domain):
                     return fetch_agents_json(agents_json_url)
     except Exception as e:
         print(f"Error querying DNS: {e}")
-    
+
     # Try default location
     return fetch_agents_json(f"https://{domain}/agents.json")
 
@@ -93,7 +93,7 @@ def generate_key_pair():
         key_size=2048
     )
     public_key = private_key.public_key()
-    
+
     # Serialize keys
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -104,7 +104,7 @@ def generate_key_pair():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    
+
     return private_pem, public_pem
 
 def get_policy(policy_url):
@@ -269,7 +269,7 @@ def generate_key_pair():
         key_size=2048
     )
     public_key = private_key.public_key()
-    
+
     # Serialize keys
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -280,16 +280,16 @@ def generate_key_pair():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    
+
     return private_pem, public_pem
 
 def create_agents_json(service_name, service_description, service_url, intents):
     private_key, public_key = generate_key_pair()
-    
+
     # Save private key to file
     with open("private_key.pem", "wb") as f:
         f.write(private_key)
-    
+
     agents_json = {
         "service-info": {
             "name": service_name,
@@ -312,11 +312,11 @@ def create_agents_json(service_name, service_description, service_url, intents):
             "notes": "Data is encrypted in transit and at rest."
         }
     }
-    
+
     # Save agents.json to file
     with open("agents.json", "w") as f:
         json.dump(agents_json, f, indent=2)
-    
+
     return agents_json
 
 # Example usage
@@ -356,16 +356,16 @@ def verify_signed_policy(signed_policy_hex, agent_public_key_pem):
     try:
         # Convert hex to bytes
         signed_policy = bytes.fromhex(signed_policy_hex)
-        
+
         # Load agent's public key
         agent_public_key = serialization.load_pem_public_key(
             agent_public_key_pem.encode('utf-8')
         )
-        
+
         # Load policy
         with open("uim-policy.json", "rb") as f:
             policy = f.read()
-        
+
         # Verify signature
         agent_public_key.verify(
             signed_policy,
@@ -373,7 +373,7 @@ def verify_signed_policy(signed_policy_hex, agent_public_key_pem):
             padding.PKCS1v15(),
             SHA256()
         )
-        
+
         return True
     except Exception as e:
         print(f"Error verifying signed policy: {e}")
@@ -385,13 +385,13 @@ def issue_pat():
     agent_id = data.get("agent_id")
     signed_policy = data.get("signed_policy")
     agent_public_key = data.get("agent_public_key")
-    
+
     if not agent_id or not signed_policy or not agent_public_key:
         return jsonify({"error": "Missing required parameters"}), 400
-    
+
     if not verify_signed_policy(signed_policy, agent_public_key):
         return jsonify({"error": "Invalid policy signature"}), 400
-    
+
     # Generate PAT
     private_key = load_private_key()
     pat = {
@@ -407,10 +407,10 @@ def issue_pat():
             "period": 3600
         }
     }
-    
+
     # Sign PAT
     token = jwt.encode(pat, private_key, algorithm="RS256")
-    
+
     return jsonify({"uim-pat": token})
 
 if __name__ == "__main__":
@@ -432,7 +432,7 @@ def verify_pat(pat):
         # Load public key
         with open("public_key.pem", "rb") as f:
             public_key = f.read()
-        
+
         # Verify PAT
         decoded_pat = jwt.decode(
             pat,
@@ -440,7 +440,7 @@ def verify_pat(pat):
             algorithms=["RS256"],
             options={"verify_aud": False}
         )
-        
+
         return decoded_pat
     except Exception as e:
         print(f"Error verifying PAT: {e}")
@@ -452,30 +452,30 @@ def execute_intent():
     auth_header = request.headers.get("Authorization")
     if not auth_header or not auth_header.startswith("Bearer "):
         return jsonify({"error": "Missing or invalid Authorization header"}), 401
-    
+
     pat = auth_header.split(" ")[1]
     decoded_pat = verify_pat(pat)
     if not decoded_pat:
         return jsonify({"error": "Invalid PAT"}), 401
-    
+
     # Get intent and parameters
     data = request.json
     intent_uid = data.get("intent_uid")
     parameters = data.get("parameters", {})
-    
+
     if not intent_uid:
         return jsonify({"error": "Missing intent_uid"}), 400
-    
+
     # Check if intent is allowed by PAT
     if f"{intent_uid}:execute" not in decoded_pat.get("scope", []):
         return jsonify({"error": "Intent not allowed by PAT"}), 403
-    
+
     # Execute intent
     if intent_uid == "example.com:search-products:v1":
         query = parameters.get("query")
         if not query:
             return jsonify({"error": "Missing required parameter: query"}), 400
-        
+
         # Simulate search
         products = [
             {
@@ -485,7 +485,7 @@ def execute_intent():
                 "description": "A powerful laptop"
             }
         ]
-        
+
         return jsonify({
             "products": products,
             "total_results": len(products)

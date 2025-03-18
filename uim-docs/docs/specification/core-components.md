@@ -403,7 +403,7 @@ Services publish discovery information using DNS TXT records. Each record contai
 
 - **uim-policy-file**: URL of the policy file (REQUIRED)
   Example: "uim-policy-file=https://example.com/policy.json"
-  
+
 - **uim-license**: The UIM license for the service (OPTIONAL)
   Example: "uim-license=https://uimprotocol.com/licenses/uim-by-nc-v1.0"
 

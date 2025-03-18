@@ -72,7 +72,7 @@ class UIMAgent:
         self.agent_id = agent_id
         self.private_key, self.public_key = self._generate_key_pair()
         self.pats = {}  # Store PATs for different services
-        
+
     def _generate_key_pair(self):
         # Generate RSA key pair
         private_key = rsa.generate_private_key(
@@ -80,7 +80,7 @@ class UIMAgent:
             key_size=2048
         )
         public_key = private_key.public_key()
-        
+
         # Serialize keys
         private_pem = private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
@@ -91,9 +91,9 @@ class UIMAgent:
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
-        
+
         return private_pem, public_pem
-    
+
     def discover_service(self, domain):
         # Query DNS TXT records
         try:
@@ -104,7 +104,7 @@ class UIMAgent:
         except Exception as e:
             print(f"Error discovering service: {e}")
             return None
-    
+
     def fetch_agents_json(self, url):
         try:
             response = requests.get(url)
@@ -113,7 +113,7 @@ class UIMAgent:
         except Exception as e:
             print(f"Error fetching agents.json: {e}")
             return None
-    
+
     def get_policy(self, policy_url):
         try:
             response = requests.get(policy_url)
@@ -122,7 +122,7 @@ class UIMAgent:
         except Exception as e:
             print(f"Error fetching policy: {e}")
             return None
-    
+
     def sign_policy(self, policy):
         # Sign the policy using the private key
         private_key_obj = serialization.load_pem_private_key(
@@ -136,7 +136,7 @@ class UIMAgent:
             SHA256()
         )
         return signature
-    
+
     def request_pat(self, service_url, signed_policy):
         try:
             response = requests.post(
@@ -154,14 +154,14 @@ class UIMAgent:
         except Exception as e:
             print(f"Error requesting PAT: {e}")
             return None
-    
+
     def execute_intent(self, service_url, intent_uid, parameters):
         # Get PAT for the service
         pat = self.pats.get(service_url)
         if not pat:
             print(f"No PAT available for {service_url}")
             return None
-        
+
         try:
             response = requests.post(
                 f"{service_url}/uim/execute",
@@ -179,7 +179,7 @@ class UIMAgent:
         except Exception as e:
             print(f"Error executing intent: {e}")
             return None
-    
+
     def search_intents(self, service_url, query=None, tags=None):
         # Build query parameters
         params = {}
@@ -187,7 +187,7 @@ class UIMAgent:
             params["query"] = query
         if tags:
             params["tags"] = ",".join(tags)
-        
+
         try:
             response = requests.get(
                 f"{service_url}/uim/intents/search",
@@ -206,16 +206,16 @@ service_info = agent.discover_service("example.com")
 if service_info:
     policy_url = service_info["uim-policy-file"]
     service_url = service_info["service-info"]["service_url"]
-    
+
     policy = agent.get_policy(policy_url)
     if policy:
         signed_policy = agent.sign_policy(policy)
         pat = agent.request_pat(service_url, signed_policy)
-        
+
         if pat:
             # Search for intents
             intents = agent.search_intents(service_url, tags=["e-commerce", "search"])
-            
+
             if intents:
                 # Execute an intent
                 intent_uid = intents[0]["intent_uid"]
@@ -224,7 +224,7 @@ if service_info:
                     intent_uid,
                     {"query": "laptop"}
                 )
-                
+
                 if result:
                     print(f"Intent execution result: {result}")
 ```
@@ -332,13 +332,13 @@ def issue_pat():
     agent_id = data.get("agent_id")
     signed_policy = data.get("signed_policy")
     agent_public_key = data.get("agent_public_key")
-    
+
     if not agent_id or not signed_policy or not agent_public_key:
         return jsonify({"error": "Missing required parameters"}), 400
-    
+
     if not verify_signed_policy(signed_policy, agent_public_key):
         return jsonify({"error": "Invalid policy signature"}), 400
-    
+
     # Generate PAT
     pat = {
         "iss": "example.com",
@@ -353,10 +353,10 @@ def issue_pat():
             "period": 3600
         }
     }
-    
+
     # Sign PAT
     token = jwt.encode(pat, private_key, algorithm="RS256")
-    
+
     return jsonify({
         "uim-pat": token,
         "expires_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(pat["exp"]))
@@ -366,23 +366,23 @@ def issue_pat():
 def search_intents():
     query = request.args.get("query")
     tags = request.args.get("tags")
-    
+
     filtered_intents = intents
-    
+
     if query:
         filtered_intents = [
             intent for intent in filtered_intents
             if query.lower() in intent["intent_name"].lower() or
                query.lower() in intent["description"].lower()
         ]
-    
+
     if tags:
         tag_list = tags.split(",")
         filtered_intents = [
             intent for intent in filtered_intents
             if any(tag in intent["tags"] for tag in tag_list)
         ]
-    
+
     return jsonify({
         "intents": filtered_intents,
         "pagination": {
@@ -399,30 +399,30 @@ def execute_intent():
     auth_header = request.headers.get("Authorization")
     if not auth_header or not auth_header.startswith("Bearer "):
         return jsonify({"error": "Missing or invalid Authorization header"}), 401
-    
+
     pat = auth_header.split(" ")[1]
     decoded_pat = verify_pat(pat)
     if not decoded_pat:
         return jsonify({"error": "Invalid PAT"}), 401
-    
+
     # Get intent and parameters
     data = request.json
     intent_uid = data.get("intent_uid")
     parameters = data.get("parameters", {})
-    
+
     if not intent_uid:
         return jsonify({"error": "Missing intent_uid"}), 400
-    
+
     # Check if intent is allowed by PAT
     if f"{intent_uid}:execute" not in decoded_pat.get("scope", []):
         return jsonify({"error": "Intent not allowed by PAT"}), 403
-    
+
     # Execute intent
     if intent_uid == "example.com:search-products:v1":
         query = parameters.get("query")
         if not query:
             return jsonify({"error": "Missing required parameter: query"}), 400
-        
+
         # Simulate search
         products = [
             {
@@ -432,7 +432,7 @@ def execute_intent():
                 "description": "A powerful laptop"
             }
         ]
-        
+
         return jsonify({
             "products": products,
             "total_results": len(products)
@@ -447,7 +447,7 @@ def generate_key_pair():
         key_size=2048
     )
     public_key = private_key.public_key()
-    
+
     # Serialize keys
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -458,22 +458,22 @@ def generate_key_pair():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    
+
     return private_pem, public_pem
 
 def verify_signed_policy(signed_policy_hex, agent_public_key_pem):
     try:
         # Convert hex to bytes
         signed_policy = bytes.fromhex(signed_policy_hex)
-        
+
         # Load agent's public key
         agent_public_key = serialization.load_pem_public_key(
             agent_public_key_pem.encode('utf-8')
         )
-        
+
         # Load policy
         policy_json = json.dumps(policy).encode('utf-8')
-        
+
         # Verify signature
         agent_public_key.verify(
             signed_policy,
@@ -481,7 +481,7 @@ def verify_signed_policy(signed_policy_hex, agent_public_key_pem):
             padding.PKCS1v15(),
             SHA256()
         )
-        
+
         return True
     except Exception as e:
         print(f"Error verifying signed policy: {e}")
@@ -496,7 +496,7 @@ def verify_pat(pat):
             algorithms=["RS256"],
             options={"verify_aud": False}
         )
-        
+
         return decoded_pat
     except Exception as e:
         print(f"Error verifying PAT: {e}")

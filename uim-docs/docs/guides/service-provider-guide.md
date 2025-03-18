@@ -203,57 +203,57 @@ app.use(express.json());
 // Intent search endpoint
 app.get('/uim/intents/search', (req, res) => {
   const { query, tags, intent_name, uid, namespace, description } = req.query;
-  
+
   // Filter intents based on query parameters
   let filteredIntents = [...intents];
-  
+
   if (query) {
     const queryLower = query.toLowerCase();
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_name.toLowerCase().includes(queryLower) ||
       intent.description.toLowerCase().includes(queryLower)
     );
   }
-  
+
   if (tags) {
     const tagList = tags.split(',');
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       tagList.some(tag => intent.tags.includes(tag))
     );
   }
-  
+
   if (intent_name) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_name.toLowerCase() === intent_name.toLowerCase()
     );
   }
-  
+
   if (uid) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_uid === uid
     );
   }
-  
+
   if (namespace) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_uid.split(':')[0] === namespace
     );
   }
-  
+
   if (description) {
     const descLower = description.toLowerCase();
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.description.toLowerCase().includes(descLower)
     );
   }
-  
+
   // Pagination
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.page_size) || 10;
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedIntents = filteredIntents.slice(startIndex, endIndex);
-  
+
   res.json({
     intents: paginatedIntents,
     pagination: {
@@ -268,7 +268,7 @@ app.get('/uim/intents/search', (req, res) => {
 // Intent details endpoint
 app.get('/uim/intents/:intent_uid', (req, res) => {
   const intent = intents.find(i => i.intent_uid === req.params.intent_uid);
-  
+
   if (!intent) {
     return res.status(404).json({
       error: {
@@ -277,7 +277,7 @@ app.get('/uim/intents/:intent_uid', (req, res) => {
       }
     });
   }
-  
+
   res.json(intent);
 });
 ```
@@ -301,7 +301,7 @@ Implement the PAT issuance API that allows AI agents to request PATs:
 // PAT issuance endpoint
 app.post('/pat/issue', (req, res) => {
   const { agent_id, signed_policy, agent_public_key } = req.body;
-  
+
   // Validate request
   if (!agent_id || !signed_policy || !agent_public_key) {
     return res.status(400).json({
@@ -311,7 +311,7 @@ app.post('/pat/issue', (req, res) => {
       }
     });
   }
-  
+
   try {
     // Verify the signature
     const policyJson = JSON.stringify(policy);
@@ -321,7 +321,7 @@ app.post('/pat/issue', (req, res) => {
       agent_public_key,
       Buffer.from(signed_policy, 'hex')
     );
-    
+
     if (!isValid) {
       return res.status(400).json({
         error: {
@@ -330,7 +330,7 @@ app.post('/pat/issue', (req, res) => {
         }
       });
     }
-    
+
     // Generate PAT
     const pat = {
       iss: 'example.com',
@@ -345,10 +345,10 @@ app.post('/pat/issue', (req, res) => {
         period: 3600
       }
     };
-    
+
     // Sign PAT
     const token = jwt.sign(pat, privateKey, { algorithm: 'RS256' });
-    
+
     res.json({
       'uim-pat': token,
       'expires_at': new Date(pat.exp * 1000).toISOString()
@@ -373,7 +373,7 @@ Implement the intent execution API that allows AI agents to execute intents:
 // Intent execution endpoint
 app.post('/uim/execute', (req, res) => {
   const { intent_uid, parameters } = req.body;
-  
+
   // Validate request
   if (!intent_uid || !parameters) {
     return res.status(400).json({
@@ -383,7 +383,7 @@ app.post('/uim/execute', (req, res) => {
       }
     });
   }
-  
+
   // Verify PAT
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -394,11 +394,11 @@ app.post('/uim/execute', (req, res) => {
       }
     });
   }
-  
+
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
-    
+
     // Check if the PAT allows executing this intent
     if (!decoded.scope.includes(`${intent_uid}:execute`)) {
       return res.status(403).json({
@@ -408,10 +408,10 @@ app.post('/uim/execute', (req, res) => {
         }
       });
     }
-    
+
     // Check rate limit
     // In a real implementation, you would use a rate limiting library or database
-    
+
     // Find the intent
     const intent = intents.find(i => i.intent_uid === intent_uid);
     if (!intent) {
@@ -422,7 +422,7 @@ app.post('/uim/execute', (req, res) => {
         }
       });
     }
-    
+
     // Validate parameters
     for (const param of intent.input_parameters) {
       if (param.required && !parameters[param.name]) {
@@ -434,7 +434,7 @@ app.post('/uim/execute', (req, res) => {
         });
       }
     }
-    
+
     // Execute the intent
     // In a real implementation, you would call your actual business logic here
     if (intent_uid === 'example.com:search-products:v1') {
@@ -447,7 +447,7 @@ app.post('/uim/execute', (req, res) => {
           description: 'A powerful laptop'
         }
       ];
-      
+
       res.json({
         products,
         total_results: products.length
@@ -491,7 +491,7 @@ app.post('/uim/execute', (req, res) => {
         }
       });
     }
-    
+
     console.error('Error executing intent:', error);
     res.status(500).json({
       error: {
@@ -677,57 +677,57 @@ app.use(express.static('public'));
 // Intent search endpoint
 app.get('/uim/intents/search', (req, res) => {
   const { query, tags, intent_name, uid, namespace, description } = req.query;
-  
+
   // Filter intents based on query parameters
   let filteredIntents = [...intents];
-  
+
   if (query) {
     const queryLower = query.toLowerCase();
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_name.toLowerCase().includes(queryLower) ||
       intent.description.toLowerCase().includes(queryLower)
     );
   }
-  
+
   if (tags) {
     const tagList = tags.split(',');
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       tagList.some(tag => intent.tags.includes(tag))
     );
   }
-  
+
   if (intent_name) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_name.toLowerCase() === intent_name.toLowerCase()
     );
   }
-  
+
   if (uid) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_uid === uid
     );
   }
-  
+
   if (namespace) {
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.intent_uid.split(':')[0] === namespace
     );
   }
-  
+
   if (description) {
     const descLower = description.toLowerCase();
-    filteredIntents = filteredIntents.filter(intent => 
+    filteredIntents = filteredIntents.filter(intent =>
       intent.description.toLowerCase().includes(descLower)
     );
   }
-  
+
   // Pagination
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.page_size) || 10;
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedIntents = filteredIntents.slice(startIndex, endIndex);
-  
+
   res.json({
     intents: paginatedIntents,
     pagination: {
@@ -742,7 +742,7 @@ app.get('/uim/intents/search', (req, res) => {
 // Intent details endpoint
 app.get('/uim/intents/:intent_uid', (req, res) => {
   const intent = intents.find(i => i.intent_uid === req.params.intent_uid);
-  
+
   if (!intent) {
     return res.status(404).json({
       error: {
@@ -751,7 +751,7 @@ app.get('/uim/intents/:intent_uid', (req, res) => {
       }
     });
   }
-  
+
   res.json(intent);
 });
 
@@ -763,7 +763,7 @@ app.get('/uim-policy.json', (req, res) => {
 // PAT issuance endpoint
 app.post('/pat/issue', (req, res) => {
   const { agent_id, signed_policy, agent_public_key } = req.body;
-  
+
   // Validate request
   if (!agent_id || !signed_policy || !agent_public_key) {
     return res.status(400).json({
@@ -773,7 +773,7 @@ app.post('/pat/issue', (req, res) => {
       }
     });
   }
-  
+
   try {
     // Verify the signature
     const policyJson = JSON.stringify(policy);
@@ -783,7 +783,7 @@ app.post('/pat/issue', (req, res) => {
       agent_public_key,
       Buffer.from(signed_policy, 'hex')
     );
-    
+
     if (!isValid) {
       return res.status(400).json({
         error: {
@@ -792,7 +792,7 @@ app.post('/pat/issue', (req, res) => {
         }
       });
     }
-    
+
     // Generate PAT
     const pat = {
       iss: 'example.com',
@@ -807,10 +807,10 @@ app.post('/pat/issue', (req, res) => {
         period: 3600
       }
     };
-    
+
     // Sign PAT
     const token = jwt.sign(pat, privateKey, { algorithm: 'RS256' });
-    
+
     res.json({
       'uim-pat': token,
       'expires_at': new Date(pat.exp * 1000).toISOString()
@@ -829,7 +829,7 @@ app.post('/pat/issue', (req, res) => {
 // Intent execution endpoint
 app.post('/uim/execute', (req, res) => {
   const { intent_uid, parameters } = req.body;
-  
+
   // Validate request
   if (!intent_uid || !parameters) {
     return res.status(400).json({
@@ -839,7 +839,7 @@ app.post('/uim/execute', (req, res) => {
       }
     });
   }
-  
+
   // Verify PAT
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -850,11 +850,11 @@ app.post('/uim/execute', (req, res) => {
       }
     });
   }
-  
+
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
-    
+
     // Check if the PAT allows executing this intent
     if (!decoded.scope.includes(`${intent_uid}:execute`)) {
       return res.status(403).json({
@@ -864,10 +864,10 @@ app.post('/uim/execute', (req, res) => {
         }
       });
     }
-    
+
     // Check rate limit
     // In a real implementation, you would use a rate limiting library or database
-    
+
     // Find the intent
     const intent = intents.find(i => i.intent_uid === intent_uid);
     if (!intent) {
@@ -878,7 +878,7 @@ app.post('/uim/execute', (req, res) => {
         }
       });
     }
-    
+
     // Validate parameters
     for (const param of intent.input_parameters) {
       if (param.required && !parameters[param.name]) {
@@ -890,7 +890,7 @@ app.post('/uim/execute', (req, res) => {
         });
       }
     }
-    
+
     // Execute the intent
     // In a real implementation, you would call your actual business logic here
     if (intent_uid === 'example.com:search-products:v1') {
@@ -903,7 +903,7 @@ app.post('/uim/execute', (req, res) => {
           description: 'A powerful laptop'
         }
       ];
-      
+
       res.json({
         products,
         total_results: products.length

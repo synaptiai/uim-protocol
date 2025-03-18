@@ -1,15 +1,31 @@
-import requests
-import json
-from typing import Dict, List
-from error_handling import handle_error, NetworkError, APIError
-from key_management import get_key_pair
+"""
+Discovery module for UIM Mock Agent.
 
+This module provides functionality for discovering UIM services and their intents
+by fetching and parsing agents.json files from UIM-compatible web services.
+"""
+import json
+from typing import Dict
+
+import requests
+from error_handling import APIError, NetworkError, handle_error
+from key_management import get_key_pair
 
 SERVICE_URL = "http://localhost:4000"  # Adjust this URL if needed
 AGENTS_ENDPOINT = f"{SERVICE_URL}/agents.json"
 
 
 def fetch_agents_json() -> Dict:
+    """
+    Fetch the agents.json file from the UIM service.
+
+    Returns:
+        Dict: The parsed JSON content of the agents.json file
+
+    Raises:
+        NetworkError: If there's an issue with the network request
+        APIError: If there's an issue parsing the JSON response
+    """
     try:
         response = requests.get(AGENTS_ENDPOINT)
         response.raise_for_status()
@@ -21,6 +37,15 @@ def fetch_agents_json() -> Dict:
 
 
 def extract_intent_metadata(agents_data: Dict) -> Dict:
+    """
+    Extract intent metadata from the agents.json data.
+
+    Args:
+        agents_data: The parsed agents.json data
+
+    Returns:
+        Dict: A dictionary containing extracted intents, execute endpoint, and service URL
+    """
     print(f"Debug: agents_data structure: {json.dumps(agents_data, indent=2)}")
     intents = []
     execute_endpoint = agents_data.get("uim-api-execute")
@@ -49,6 +74,11 @@ def extract_intent_metadata(agents_data: Dict) -> Dict:
 
 
 def main():
+    """
+    Main function for testing the discovery module functionality.
+
+    Fetches agents.json, extracts intent metadata, and displays the results.
+    """
     try:
         agents_data = fetch_agents_json()
         print(f"Debug: Full agents_data structure: {json.dumps(agents_data, indent=2)}")

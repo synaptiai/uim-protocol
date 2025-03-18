@@ -10,8 +10,8 @@ The Discovery API allows AI agents to discover available intents and services.
 
 Searches for available intents based on given criteria.
 
-**Endpoint**: `/api/intents/search`  
-**Method**: GET  
+**Endpoint**: `/api/intents/search`
+**Method**: GET
 **Content-Type**: application/json
 
 #### Request Parameters
@@ -76,8 +76,8 @@ Searches for available intents based on given criteria.
 
 Retrieves detailed information about a specific intent.
 
-**Endpoint**: `/api/intents/{intent_uid}`  
-**Method**: GET  
+**Endpoint**: `/api/intents/{intent_uid}`
+**Method**: GET
 **Content-Type**: application/json
 
 #### Request Parameters
@@ -129,9 +129,9 @@ The Execution API allows AI agents to execute intents.
 
 Executes an intent based on the provided input parameters.
 
-**Endpoint**: `/api/intents/execute`  
-**Method**: POST  
-**Content-Type**: application/json  
+**Endpoint**: `/api/intents/execute`
+**Method**: POST
+**Content-Type**: application/json
 **Authorization**: Bearer \<PAT\>
 
 #### Request Body
@@ -199,8 +199,8 @@ The Policy API allows AI agents to retrieve policies and request Policy Adherenc
 
 Retrieves the policy for the service.
 
-**Endpoint**: `/api/policy`  
-**Method**: GET  
+**Endpoint**: `/api/policy`
+**Method**: GET
 **Content-Type**: application/json
 
 #### Response
@@ -268,8 +268,8 @@ Retrieves the policy for the service.
 
 Requests a Policy Adherence Token (PAT) for the service.
 
-**Endpoint**: `/api/pat/issue`  
-**Method**: POST  
+**Endpoint**: `/api/pat/issue`
+**Method**: POST
 **Content-Type**: application/json
 
 #### Request Body
@@ -316,9 +316,9 @@ The Service Management API allows web services to register and manage their inte
 
 Registers a new service with the central repository.
 
-**Endpoint**: `/api/services`  
-**Method**: POST  
-**Content-Type**: application/json  
+**Endpoint**: `/api/services`
+**Method**: POST
+**Content-Type**: application/json
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Body
@@ -372,9 +372,9 @@ Registers a new service with the central repository.
 
 Updates the details of an existing service.
 
-**Endpoint**: `/api/services/{service_id}`  
-**Method**: PUT  
-**Content-Type**: application/json  
+**Endpoint**: `/api/services/{service_id}`
+**Method**: PUT
+**Content-Type**: application/json
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Parameters
@@ -414,8 +414,8 @@ Same as Register Service.
 
 Deletes a registered service.
 
-**Endpoint**: `/api/services/{service_id}`  
-**Method**: DELETE  
+**Endpoint**: `/api/services/{service_id}`
+**Method**: DELETE
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Parameters
@@ -441,8 +441,8 @@ Deletes a registered service.
 
 Retrieves the details of a registered service.
 
-**Endpoint**: `/api/services/{service_id}`  
-**Method**: GET  
+**Endpoint**: `/api/services/{service_id}`
+**Method**: GET
 **Content-Type**: application/json
 
 #### Request Parameters
@@ -485,8 +485,8 @@ The Intent Management API allows web services to manage their intents.
 
 Lists all intents for a specific service.
 
-**Endpoint**: `/api/services/{service_id}/intents`  
-**Method**: GET  
+**Endpoint**: `/api/services/{service_id}/intents`
+**Method**: GET
 **Content-Type**: application/json
 
 #### Request Parameters
@@ -534,9 +534,9 @@ Lists all intents for a specific service.
 
 Creates a new intent for a specific service.
 
-**Endpoint**: `/api/services/{service_id}/intents`  
-**Method**: POST  
-**Content-Type**: application/json  
+**Endpoint**: `/api/services/{service_id}/intents`
+**Method**: POST
+**Content-Type**: application/json
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Parameters
@@ -605,9 +605,9 @@ Creates a new intent for a specific service.
 
 Updates the details of an existing intent.
 
-**Endpoint**: `/api/intents/{intent_id}`  
-**Method**: PUT  
-**Content-Type**: application/json  
+**Endpoint**: `/api/intents/{intent_id}`
+**Method**: PUT
+**Content-Type**: application/json
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Parameters
@@ -647,8 +647,8 @@ Same as Create Intent.
 
 Deletes an existing intent.
 
-**Endpoint**: `/api/intents/{intent_id}`  
-**Method**: DELETE  
+**Endpoint**: `/api/intents/{intent_id}`
+**Method**: DELETE
 **Authorization**: Bearer \<Admin Token\>
 
 #### Request Parameters

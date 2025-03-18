@@ -28,7 +28,7 @@ graph TD
     B -->|2. Returns matching services| A
     A -->|3. Authenticates & sends intent| C[Mock Webservice]
     C -->|4. Processes intent & responds| A
-    
+
     subgraph "UIM Protocol Components"
         D[Intent Format] -.-> A
         D -.-> C

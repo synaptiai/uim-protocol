@@ -279,7 +279,7 @@ The UIM protocol includes a robust policy management system based on Policy Adhe
    - API Example:
      ```http
      GET /api/discovery/intents?query=search&category=ecommerce
-     
+
      Response:
      {
        "intents": [
@@ -609,7 +609,7 @@ The discovery process is designed to be both flexible and efficient, allowing AI
      frequency: 90 days
      overlap: 24 hours
      notification: 7 days before
-   
+
    Audit Logging:
      retention: 365 days
      fields:
@@ -954,4 +954,4 @@ This presentation is designed to be delivered in approximately 60-90 minutes, wi
 4. Real-world benefits and implementation examples
 5. The ease of getting started and community support
 
-Visual elements (diagrams, charts, etc.) should be created to be clear and engaging, using a consistent style throughout the presentation. The speaker should be prepared to dive deeper into technical details during the Q&A session. 
+Visual elements (diagrams, charts, etc.) should be created to be clear and engaging, using a consistent style throughout the presentation. The speaker should be prepared to dive deeper into technical details during the Q&A session.

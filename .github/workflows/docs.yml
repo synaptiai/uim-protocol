@@ -10,7 +10,6 @@ on:
       - main
     paths:
       - 'uim-docs/**'
-      - 'docs/**'
       - '.github/workflows/docs.yml'
       - 'pyproject.toml'
       - 'poetry.lock'
@@ -19,7 +18,6 @@ on:
       - main
     paths:
       - 'uim-docs/**'
-      - 'docs/**'
       - '.github/workflows/docs.yml'
       - 'pyproject.toml'
       - 'poetry.lock'

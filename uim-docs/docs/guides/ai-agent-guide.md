@@ -43,7 +43,7 @@ def generate_key_pair():
         key_size=2048
     )
     public_key = private_key.public_key()
-    
+
     # Serialize keys
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -54,7 +54,7 @@ def generate_key_pair():
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    
+
     return private_pem, public_pem
 ```
 
@@ -104,7 +104,7 @@ def search_intents(service_url, query=None, tags=None):
         params["query"] = query
     if tags:
         params["tags"] = ",".join(tags)
-    
+
     try:
         response = requests.get(
             f"{service_url}/uim/intents/search",
@@ -208,33 +208,33 @@ class UIMAgent:
         self.agent_id = agent_id
         self.private_key, self.public_key = generate_key_pair()
         self.pats = {}  # Store PATs for different services
-        
+
     def discover_service(self, domain):
         return discover_service(domain)
-    
+
     def search_intents(self, service_url, query=None, tags=None):
         return search_intents(service_url, query, tags)
-    
+
     def get_policy(self, policy_url):
         return get_policy(policy_url)
-    
+
     def sign_policy(self, policy):
         return sign_policy(policy, self.private_key)
-    
+
     def request_pat(self, service_url, signed_policy):
         pat = request_pat(service_url, self.agent_id, signed_policy, self.public_key)
         if pat:
             self.pats[service_url] = pat
         return pat
-    
+
     def execute_intent(self, service_url, intent_uid, parameters):
         pat = self.pats.get(service_url)
         if not pat:
             print(f"No PAT available for {service_url}")
             return None
-        
+
         return execute_intent(service_url, intent_uid, parameters, pat)
-    
+
     def interact_with_service(self, domain, query=None, tags=None):
         """
         High-level method to interact with a service
@@ -243,25 +243,25 @@ class UIMAgent:
         service_info = self.discover_service(domain)
         if not service_info:
             return None
-        
+
         # Get service details
         policy_url = service_info["uim-policy-file"]
         service_url = service_info["service-info"]["service_url"]
-        
+
         # Get policy and request PAT
         policy = self.get_policy(policy_url)
         if not policy:
             return None
-        
+
         signed_policy = self.sign_policy(policy)
         pat = self.request_pat(service_url, signed_policy)
         if not pat:
             return None
-        
+
         # Search for intents
         intents = self.search_intents(service_url, query, tags)
         return intents
-    
+
     def execute_intent_by_name(self, domain, intent_name, parameters):
         """
         Execute an intent by name
@@ -270,32 +270,32 @@ class UIMAgent:
         service_info = self.discover_service(domain)
         if not service_info:
             return None
-        
+
         # Get service details
         policy_url = service_info["uim-policy-file"]
         service_url = service_info["service-info"]["service_url"]
-        
+
         # Get policy and request PAT if needed
         if service_url not in self.pats:
             policy = self.get_policy(policy_url)
             if not policy:
                 return None
-            
+
             signed_policy = self.sign_policy(policy)
             pat = self.request_pat(service_url, signed_policy)
             if not pat:
                 return None
-        
+
         # Search for the intent
         intents = self.search_intents(service_url, intent_name=intent_name)
         if not intents:
             return None
-        
+
         # Find the intent with the matching name
         intent = next((i for i in intents if i["intent_name"] == intent_name), None)
         if not intent:
             return None
-        
+
         # Execute the intent
         return self.execute_intent(service_url, intent["intent_uid"], parameters)
 ```

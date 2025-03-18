@@ -1,0 +1,10 @@
+[MASTER]
+# Disable specific warnings
+disable=
+    no-name-in-module,  # False positive for pydantic.BaseModel
+    too-few-public-methods,  # False positive for Pydantic models
+    no-member  # False positive for jwt module
+
+[FORMAT]
+# Maximum line length
+max-line-length=100

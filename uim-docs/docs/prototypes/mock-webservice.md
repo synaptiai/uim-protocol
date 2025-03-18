@@ -225,7 +225,7 @@ The business logic for intents is implemented in the `handlers` directory. Each 
 // handlers/searchProducts.js
 module.exports = async function searchProducts(parameters) {
   const { query, category, price_range, sort_by } = parameters;
-  
+
   // In a real implementation, this would query a database
   // For the mock service, we return simulated data
   const products = [
@@ -244,26 +244,26 @@ module.exports = async function searchProducts(parameters) {
       description: 'A feature-rich smartphone'
     }
   ];
-  
+
   // Filter by category if provided
   let filteredProducts = products;
   if (category) {
     filteredProducts = filteredProducts.filter(p => p.category === category);
   }
-  
+
   // Filter by price range if provided
   if (price_range) {
     const [min, max] = price_range.split('-').map(Number);
     filteredProducts = filteredProducts.filter(p => p.price >= min && p.price <= max);
   }
-  
+
   // Sort if sort_by is provided
   if (sort_by === 'price_asc') {
     filteredProducts.sort((a, b) => a.price - b.price);
   } else if (sort_by === 'price_desc') {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
-  
+
   return {
     products: filteredProducts,
     total_results: filteredProducts.length

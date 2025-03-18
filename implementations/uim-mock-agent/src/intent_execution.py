@@ -1,6 +1,13 @@
+"""
+Intent Execution module for UIM Mock Agent.
+
+This module provides functionality for executing intents against UIM-compatible
+web services, including parameter handling and authentication.
+"""
+from typing import Any, Dict
+
 import requests
-from typing import Dict, Any
-from error_handling import NetworkError, APIError
+from error_handling import APIError, NetworkError
 
 MOCK_SERVICE_URL = "http://localhost:4000"
 

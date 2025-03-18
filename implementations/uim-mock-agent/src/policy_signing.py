@@ -1,10 +1,16 @@
-import jwt
-from typing import Dict
-from error_handling import APIError
-from cryptography.hazmat.primitives import serialization
-from pat_issuance import handle_pat_issuance
-from key_management import get_key_pair
+"""
+Policy Signing module for UIM Mock Agent.
 
+This module provides functionality for signing ODRL policies and submitting them
+to UIM-compatible web services to obtain Policy Adherence Tokens (PATs).
+"""
+from typing import Dict
+
+import jwt
+from cryptography.hazmat.primitives import serialization
+from error_handling import APIError
+from key_management import get_key_pair
+from pat_issuance import handle_pat_issuance
 
 MOCK_SERVICE_URL = "http://localhost:4000"
 POLICY_VERIFICATION_ENDPOINT = f"{MOCK_SERVICE_URL}/pat/issue"

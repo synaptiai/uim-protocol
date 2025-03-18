@@ -1,10 +1,29 @@
+"""
+Key Management module for UIM Mock Agent.
+
+This module provides functionality for generating, storing, and retrieving
+cryptographic key pairs used for signing and verifying UIM protocol messages.
+"""
 import os
+
+from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.backends import default_backend
 
 
 def generate_key_pair(service_url):
+    """
+    Generate a new RSA key pair for a given service URL.
+
+    Args:
+        service_url: The URL of the service to generate keys for
+
+    Returns:
+        None: The keys are saved to disk
+
+    Raises:
+        Exception: If there's an error generating or saving the keys
+    """
     try:
         # Generate a new RSA key pair
         private_key = rsa.generate_private_key(
@@ -41,6 +60,20 @@ def generate_key_pair(service_url):
 
 
 def get_key_pair(service_url):
+    """
+    Get the RSA key pair for a given service URL.
+
+    If the key pair doesn't exist, it will be generated.
+
+    Args:
+        service_url: The URL of the service to get keys for
+
+    Returns:
+        tuple: (private_key, public_key) - The loaded RSA key pair
+
+    Raises:
+        Exception: If there's an error loading or generating the keys
+    """
     try:
         key_dir = os.path.join(
             "keys", service_url.replace("://", "_").replace(":", "_")
@@ -50,7 +83,8 @@ def get_key_pair(service_url):
 
         if not os.path.exists(private_key_path) or not os.path.exists(public_key_path):
             print(
-                f"Key pair not found for service URL {service_url}, generating new key pair."
+                f"Key pair not found for service URL {service_url}, "
+                f"generating new key pair."
             )
             generate_key_pair(service_url)
 
