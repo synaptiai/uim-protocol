@@ -247,7 +247,7 @@ Next, set up discovery mechanisms:
 
 Add the following TXT records to your domain:
 
-```
+``` txt
 _uim.example.com. IN TXT "uim-agents=https://example.com/agents.json"
 _uim.example.com. IN TXT "uim-discovery=https://api.example.com/discovery"
 _uim.example.com. IN TXT "uim-policy=https://example.com/policy.json"
@@ -510,4 +510,4 @@ Now that you have a basic understanding of how to implement the UIM Protocol, yo
 
 - [UIM Protocol GitHub Repository](https://github.com/synaptiai/uim-protocol)
 - [UIM Protocol Discord Server](https://discord.gg/uimprotocol)
-- [UIM Protocol Twitter](https://twitter.com/uimprotocol)
+- [UIM Protocol Twitter](https://twitter.com/synaptiai)

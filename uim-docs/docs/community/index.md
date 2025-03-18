@@ -17,7 +17,7 @@ There are many ways to get involved with the UIM Protocol project:
 
 - **GitHub Discussions**: Join the conversation on our [GitHub Discussions](https://github.com/synaptiai/uim-protocol/discussions) page.
 - **Discord**: Join our [Discord server](https://discord.gg/uimprotocol) to chat with other community members and the development team.
-- **Twitter**: Follow us on [Twitter](https://twitter.com/uimprotocol) for updates and announcements.
+- **Twitter**: Follow us on [Twitter](https://twitter.com/synaptiai) for updates and announcements.
 
 ### Contribute to the Project
 
@@ -47,6 +47,6 @@ If you have questions or need help, you can reach us at:
 
 - **Email**: [contact@uimprotocol.org](mailto:contact@uimprotocol.org)
 - **Discord**: [discord.gg/uimprotocol](https://discord.gg/uimprotocol)
-- **GitHub**: [github.com/danielbentes/uim-protocol](https://github.com/synaptiai/uim-protocol)
+- **GitHub**: [github.com/synaptiai/uim-protocol](https://github.com/synaptiai/uim-protocol)
 
 We look forward to your participation in the UIM Protocol community!
