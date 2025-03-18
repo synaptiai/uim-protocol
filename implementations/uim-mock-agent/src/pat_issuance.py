@@ -4,6 +4,7 @@ PAT Issuance module for UIM Mock Agent.
 This module provides functionality for obtaining Policy Adherence Tokens (PATs)
 from UIM-compatible web services by submitting signed policies.
 """
+
 import base64
 from typing import Dict
 

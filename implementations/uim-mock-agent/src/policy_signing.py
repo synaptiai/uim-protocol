@@ -4,10 +4,10 @@ Policy Signing module for UIM Mock Agent.
 This module provides functionality for signing ODRL policies and submitting them
 to UIM-compatible web services to obtain Policy Adherence Tokens (PATs).
 """
+
 from typing import Dict
 
 import jwt
-from cryptography.hazmat.primitives import serialization
 from error_handling import APIError
 from key_management import get_key_pair
 from pat_issuance import handle_pat_issuance
@@ -48,13 +48,9 @@ def submit_signed_policy_and_get_pat(signed_policy: str, service_url: str) -> Di
     """
     try:
         agent_id = "ai-agent-1"  # This should be a unique identifier for your AI agent
-        _, public_key = get_key_pair(service_url)
-        public_key_pem = public_key.public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo,
-        ).decode("utf-8")
-
-        result = handle_pat_issuance(signed_policy, agent_id, public_key_pem)
+        # Get the key pair but we only need the agent_id for handle_pat_issuance
+        # The pat_issuance module will handle getting the public key internally
+        result = handle_pat_issuance(signed_policy, agent_id)
 
         if result["success"]:
             return {"pat": result["pat"]}

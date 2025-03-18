@@ -4,6 +4,7 @@ Discovery module for UIM Mock Agent.
 This module provides functionality for discovering UIM services and their intents
 by fetching and parsing agents.json files from UIM-compatible web services.
 """
+
 import json
 from typing import Dict
 
@@ -44,7 +45,8 @@ def extract_intent_metadata(agents_data: Dict) -> Dict:
         agents_data: The parsed agents.json data
 
     Returns:
-        Dict: A dictionary containing extracted intents, execute endpoint, and service URL
+        Dict: A dictionary containing extracted intents, execute
+        endpoint, and service URL
     """
     print(f"Debug: agents_data structure: {json.dumps(agents_data, indent=2)}")
     intents = []
@@ -75,7 +77,7 @@ def extract_intent_metadata(agents_data: Dict) -> Dict:
 
 def main():
     """
-    Main function for testing the discovery module functionality.
+    Test the discovery module functionality.
 
     Fetches agents.json, extracts intent metadata, and displays the results.
     """

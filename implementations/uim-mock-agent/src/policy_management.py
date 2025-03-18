@@ -4,6 +4,7 @@ Policy Management module for UIM Mock Agent.
 This module provides functionality for fetching, displaying, and processing
 ODRL policies from UIM-compatible web services.
 """
+
 import requests
 from error_handling import APIError, NetworkError
 from policy_signing import sign_policy, submit_signed_policy_and_get_pat
@@ -80,9 +81,10 @@ def display_policy(policy):
 
 
 def process_policy():
-    """
-    Process the ODRL policy by fetching, displaying, signing, and submitting it
-    to obtain a Policy Adherence Token (PAT).
+    """Process the ODRL policy by fetching, displaying, signing, and submitting it.
+
+    This function handles the complete policy processing workflow to obtain a
+    Policy Adherence Token (PAT).
 
     Returns:
         dict or None: The PAT result if successful, None if an error occurred
