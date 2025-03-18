@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial draft of the UIM Protocol specification
 - Core protocol components: intents, metadata, parameters, PATs
 - Discovery and execution API definitions
@@ -19,26 +20,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation and examples
 
 ### Changed
+
 - Repository structure refactored for better organization
 - Documentation moved to dedicated directories (`docs` and `uim-docs`)
 - Implementation code moved to `/implementations` directory
 - Examples moved to `/examples` directory
 
 ### Deprecated
+
 - N/A (initial release)
 
 ### Removed
-- N/A (initial release)
+
+- Removed redundant requirements.txt files from implementation directories in favor of Poetry dependency management
 
 ### Fixed
+
 - N/A (initial release)
 
 ### Security
+
 - N/A (initial release)
 
 ## [0.2.0] - 2024-09-30
 
-### Added
 - Initial public draft release
 - Protocol specification document
 - Basic architecture options: centralized, decentralized, hybrid
@@ -49,7 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2024-08-15
 
-### Added
 - Internal concept development
 - Initial architecture design
 - Core concepts definition
