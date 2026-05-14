@@ -83,7 +83,13 @@ function initializeVersionSelector() {
     // Add event listener to version selector
     versionSelector.addEventListener('change', (event) => {
       const version = event.target.value;
-      window.location.href = `/${version}/`;
+      const safeVersionPattern = /^[A-Za-z0-9._-]+$/;
+
+      if (!safeVersionPattern.test(version)) {
+        return;
+      }
+
+      window.location.href = `/${encodeURIComponent(version)}/`;
     });
   }
 }
